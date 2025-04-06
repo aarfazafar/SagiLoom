@@ -6,3 +6,31 @@
 html, body {
   overflow-x: hidden;
 }
+
+.heading-font {
+  font-family: "Gabarito", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.courier{
+  font-family: "Courier Prime", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border-radius: 100px;
+  backdrop-filter: blur(4px);
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: white;
+  font-size: 20px;
+  opacity: 1;
+}

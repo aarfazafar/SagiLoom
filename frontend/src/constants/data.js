@@ -61,8 +61,8 @@ export const navigation = {
       ],
       sections: [
         {
-          id: "shop-by-occasion",
-          name: "SHOP BY OCCASION",
+          id: "occasion",
+          name: "OCCASION",
           featured: [
             {
               name: "MEHENDI",
@@ -85,11 +85,12 @@ export const navigation = {
             { name: "WEDDING", href: "#" },
             { name: "FESTIVE", href: "#" },
             { name: "EID", href: "#" },
+            { name: "CASUAL", href: "#" },
           ],
         },
         {
-          id: "shop-by-category",
-          name: "SHOP BY CATEGORY",
+          id: "category",
+          name: "CATEGORY",
           featured: [
             {
               name: "INDOWESTERN SETS",
@@ -112,8 +113,8 @@ export const navigation = {
           ],
         },
         {
-          id: "shop-by-collection",
-          name: "SHOP BY COLLECTION",
+          id: "collection",
+          name: "COLLECTION",
           featured: [
             {
               name: "DULHE KI TOLI",
@@ -137,9 +138,31 @@ export const navigation = {
     },
   ],
   pages: [
-    { name: "NEW ARRIVALS", href: "#" },
-    { name: "KIDS", href: "#" },
+    { name: "NEW ARRIVALS", href: "/arrivals" },
+    // { name: "KIDS", href: "#" },
     { name: "TRENDING NOW", href: "#" },
+    { name: "VISION", href: "/about" },
     // { name: "TRACK ORDERS", href: "#" },
   ],
 };
+
+// const categories = [
+//   {1: ["OCCASION", "CATEGORY", "COLLECTION"]},
+//   {2: ["MEHENDI", "HALDI", "RECEPTION", "SANGEET", "WEDDING", "FESTIVE", "EID"]},
+//   {3: ["INDOWESTERN SETS", "JACKET AND JACKET SET", "KURTA AND KURTA SETS", "SHORT KURTA'S"]},
+//   {4: ["DULHE KI TOLI", "BOUGEE", "OTHER"]}
+// ]
+
+const categories = [];
+const sections = navigation.categories[0].sections;
+
+categories.push({1: sections.map(section=>section.name)})
+
+sections.forEach((section, index) => {
+  categories.push({ [index + 2]: section.items.map(item => item.name) });
+});
+categories[3][4].push("CLASSIC")
+categories[3][4].push("OTHER")
+
+const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+export {categories, sizes};

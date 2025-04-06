@@ -18,20 +18,30 @@ import {
   MagnifyingGlassIcon,
   ShoppingBagIcon,
   XMarkIcon,
-  // User,
-  UserCircleIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-// import navigat
-// import logo from '../../assets/logoNoBg.png'
+
 import logoWBg from "../../assets/logo1.jpg";
 import logo from "../../assets/logo2.png";
 import { navigation } from "../../constants/data";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
 
   const [scrolled, setScrolled] = useState(false);
+
+  //get user from localstorage
+
+  const user = JSON.parse(localStorage.getItem("users"));
+
+  const navigate = useNavigate();
+
+  // logout function
+  const logout = () => {
+    localStorage.clear("users");
+    navigate("/");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +57,7 @@ export default function NavBar() {
   }, []);
 
   return (
-    <div className="z-10 fixed top-0 w-full">
+    <div className="z-50 fixed top-0 w-full">
       {/* Mobile menu */}
       <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
         <DialogBackdrop
@@ -103,8 +113,8 @@ export default function NavBar() {
                             src={item.imageSrc}
                             className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
                           />
-                          <a
-                            href={item.href}
+                          <Link
+                            to={item.href}
                             className="mt-6 block font-medium text-gray-900"
                           >
                             <span
@@ -112,7 +122,7 @@ export default function NavBar() {
                               className="absolute inset-0 z-10"
                             />
                             {item.name}
-                          </a>
+                          </Link>
                           <p aria-hidden="true" className="mt-1">
                             Shop now
                           </p>
@@ -125,7 +135,7 @@ export default function NavBar() {
                           id={`${category.id}-${section.id}-heading-mobile`}
                           className="font-medium text-gray-900"
                         >
-                          {section.name}
+                          SHOP BY {section.name}
                         </p>
                         <ul
                           role="list"
@@ -134,12 +144,12 @@ export default function NavBar() {
                         >
                           {section.items.map((item) => (
                             <li key={item.name} className="flow-root">
-                              <a
-                                href={item.href}
+                              <Link
+                                to={item.href}
                                 className="-m-2 block p-2 text-gray-500"
                               >
                                 {item.name}
-                              </a>
+                              </Link>
                             </li>
                           ))}
                         </ul>
@@ -153,35 +163,44 @@ export default function NavBar() {
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
-                  <a
-                    href={page.href}
+                  <Link
+                    to={page.href}
                     className="-m-2 block p-2 font-medium text-gray-900"
                   >
                     {page.name}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>
-
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              <div className="flow-root">
-                <a
-                  href="#"
-                  className="-m-2 block p-2 font-medium text-gray-900"
-                >
-                  Sign in
-                </a>
-              </div>
-              <div className="flow-root">
-                <a
-                  href="#"
-                  className="-m-2 block p-2 font-medium text-gray-900"
-                >
-                  Create account
-                </a>
-              </div>
+              {user ? (
+                <button className="flow-root" onClick={logout}>
+                  <div className="-m-2 block p-2 font-medium text-gray-900">
+                    Logout
+                  </div>
+                </button>
+              ) : (
+                <>
+                  <div className="flow-root">
+                    <Link
+                      to={"/login"}
+                      className="-m-2 block p-2 font-medium text-gray-900"
+                    >
+                      Sign in
+                    </Link>
+                  </div>
+                  <div className="flow-root">
+                    <Link
+                      to={"/signup "}
+                      className="-m-2 block p-2 font-medium text-gray-900"
+                    >
+                      Create account
+                    </Link>
+                  </div>
+                </>
+              )}
             </div>
-
+            {/* 
             <div className="border-t border-gray-200 px-4 py-6">
               <a href="#" className="-m-2 flex items-center p-2">
                 <img
@@ -194,7 +213,7 @@ export default function NavBar() {
                 </span>
                 <span className="sr-only">, change currency</span>
               </a>
-            </div>
+            </div> */}
           </DialogPanel>
         </div>
       </Dialog>
@@ -212,7 +231,7 @@ export default function NavBar() {
           aria-label="Top"
           className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
         >
-          <div className="border-b border-gray-200">
+          <div className="border-b border-gray-200/75">
             <div className="flex h-16 justify-between items-center">
               <button
                 type="button"
@@ -229,14 +248,14 @@ export default function NavBar() {
 
               {/* Logo */}
               <div className="flex">
-                <a href="#">
+                <Link to="/">
                   {/* <span className="sr-only">Your Company</span> */}
                   <img
                     alt="सगिLoom"
                     src={scrolled ? logoWBg : logo}
                     className="h-16 w-auto transition-all duration-600"
                   />
-                </a>
+                </Link>
               </div>
 
               {/* Flyout menus */}
@@ -244,8 +263,13 @@ export default function NavBar() {
                 <div className="flex h-full space-x-8">
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
-                      <div className="relative flex">
+                      <div
+                        className="relative flex"
+                        // onHoverStart={() => setScrolled(true)}
+                        // onHoverEnd={() => setScrolled(false)}
+                      >
                         <PopoverButton
+                        onClick={()=>setScrolled(!scrolled)}
                           className={`relative z-10 -mb-px flex items-center border-b-2 border-transparent focus:border-none pt-px text-sm font-medium ${
                             scrolled
                               ? "text-gray-700 hover:text-gray-800 "
@@ -280,8 +304,8 @@ export default function NavBar() {
                                       src={item.imageSrc}
                                       className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
                                     />
-                                    <a
-                                      href={item.href}
+                                    <Link
+                                      to={item.href}
                                       className="mt-6 block font-medium text-gray-900"
                                     >
                                       <span
@@ -289,7 +313,7 @@ export default function NavBar() {
                                         className="absolute inset-0 z-10"
                                       />
                                       {item.name}
-                                    </a>
+                                    </Link>
                                     <p aria-hidden="true" className="mt-1">
                                       Shop now
                                     </p>
@@ -303,7 +327,7 @@ export default function NavBar() {
                                       id={`${section.name}-heading`}
                                       className="font-medium text-gray-900"
                                     >
-                                      {section.name}
+                                      SHOP BY {section.name}
                                     </p>
                                     <ul
                                       role="list"
@@ -312,12 +336,12 @@ export default function NavBar() {
                                     >
                                       {section.items.map((item) => (
                                         <li key={item.name} className="flex">
-                                          <a
-                                            href={item.href}
+                                          <Link
+                                            to={item.href}
                                             className="hover:text-gray-800"
                                           >
                                             {item.name}
-                                          </a>
+                                          </Link>
                                         </li>
                                       ))}
                                     </ul>
@@ -332,9 +356,9 @@ export default function NavBar() {
                   ))}
 
                   {navigation.pages.map((page) => (
-                    <a
+                    <Link
                       key={page.name}
-                      href={page.href}
+                      to={page.href}
                       className={`flex items-center text-sm font-medium ${
                         scrolled
                           ? "text-gray-700 hover:text-gray-800"
@@ -342,7 +366,7 @@ export default function NavBar() {
                       } transition-colors duration-300 ease-out`}
                     >
                       {page.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </PopoverGroup>
@@ -394,24 +418,24 @@ export default function NavBar() {
                   </a>
                 </div>
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2  hover:text-gray-500">
+                  <Link to={"/"} className="p-2  hover:text-gray-500">
                     <span className="sr-only">User</span>
                     <UserIcon aria-hidden="true" className="size-6" />
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+                  <Link to="#" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="size-6 shrink-0 group-hover:text-gray-500"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                    <span className="ml-2 text-sm font-medium group-hover:text-gray-800">
                       0
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
