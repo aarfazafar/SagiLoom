@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
 export default function Product({ product }) {
   const [hovered, setHovered] = useState(false);
 
@@ -24,18 +24,31 @@ export default function Product({ product }) {
     <motion.div
       whileHover={{ scale: 1.03 }}
       transition={{ duration: 0.3 }}
-      className="group relative bg-[#fdf6f0] rounded-2xl overflow-hidden shadow-[0_8px_20px_-8px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.15)] transition duration-500 ease-in-out w-80 border border-[#e7dcd0]"
+      className="group relative bg-[#fdf6f0] rounded-2xl overflow-hidden shadow-[0_8px_20px_-8px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.15)] transition duration-500 ease-in-out w-70 sm:w-80 border border-[#e7dcd0]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <a href={productLink} target="_blank" rel="noopener noreferrer">
-        <div className="relative h-100 w-full">
+      <Link
+        // to={productLink}
+        to={`/productinfo/${product.id}`}
+        rel="noopener noreferrer"
+      >
+        <div className="relative h-90 sm:h-100 w-full">
           <img
-            src={hovered ? productImages[1] : productImages[0]}
+            src={productImages[0]}
             alt={name}
-            className="object-cover object-left-top h-full w-full transition-all duration-300 ease-in-out"
+            className={`absolute top-0 left-0 w-full h-full object-cover object-left-top transition-opacity duration-500 ease-in-out ${
+              hovered ? "opacity-0" : "opacity-100"
+            }`}
           />
-          <span className="absolute top-3 left-3 bg-[#e8d8c3] text-[#5a4637] text-xs font-medium px-3 py-1 rounded-full shadow">
+          <img
+            src={productImages[1]}
+            alt={name}
+            className={`absolute top-0 left-0 w-full h-full object-cover object-left-top transition-opacity duration-500 ease-in-out ${
+              hovered ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <span className="absolute top-3 left-3 bg-[#e8d8c3] text-[#5a4637] text-xs font-medium px-3 py-1 rounded-full shadow-sm">
             {productCategories[0]?.OCCASION}
           </span>
         </div>
@@ -49,13 +62,15 @@ export default function Product({ product }) {
           </p>
 
           <div className="flex justify-between items-center mt-3">
-            <p className="text-lg courier font-semibold text-[#a9745b]">₹{price}</p>
-            <button className="text-sm bg-[#3a2e23] text-white pt-1 pb-[6px] px-4 rounded-full hover:bg-black hover:scale-105 transition-all duration-200 shadow-sm">
+            <p className="text-lg courier font-semibold text-[#a9745b]">
+              ₹{price}
+            </p>
+            <button className="text-sm bg-[#3a2e23] text-white pt-1 pb-[6px] px-4 rounded-full hover:bg-black hover:scale-105 transition-all duration-300 shadow-sm">
               View
             </button>
           </div>
         </div>
-      </a>
+      </Link>
     </motion.div>
   );
 }

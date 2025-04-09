@@ -14,7 +14,8 @@ import { ProtectedRouteForAdmin } from "./protectedRoutes/ProtectedRoute.forAdmi
 import { DashBoard } from "./Components/Admin/DashBoard";
 import { Layout } from "./Layout";
 import ProductList from "./Components/Product/ProductList";
-
+import About from "./Components/About/About";
+import ProductPage from "./Components/Product/ProductPage";
 function App() {
   useEffect(() => {
     const lenis = new Lenis();
@@ -32,11 +33,14 @@ function App() {
       <ScrollTop />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/*" element={<Layout/>} />
-        <Route path="/productinfo" element={<ProductOverview />} />
+        <Route path="/*" element={<Layout />} />
+        <Route path="/productinfo/:productId" element={<ProductOverview />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<ProductList />} />
+        <Route path="/about" element={<About />} />
+        {/* <Route path="/productpage" element={<ProductPage />} /> */}
+        <Route path="/productpage/:categoryId?/:sectionId?/:itemName?" element={<ProductPage />} />
         <Route
           path="/admin/*"
           element={

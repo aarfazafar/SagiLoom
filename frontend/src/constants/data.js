@@ -36,33 +36,37 @@
 //     { name: 'TRACK ORDERS', href: '#' },
 //   ],
 // }
+import img1  from '../assets/image1.png'
+import img2  from '../assets/image2.png'
 export const navigation = {
   categories: [
     {
       id: "shop",
+      level:1,
       name: "SHOP",
       featured: [
         {
           name: "New Arrivals",
           href: "#",
           imageSrc:
-            "https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-01.jpg",
+          img2,
           imageAlt:
-            "Models sitting back to back, wearing Basic Tee in black and bone.",
+            "New Arrivals"
         },
         {
-          name: "Basic Tees",
+          name: "Trending",
           href: "#",
           imageSrc:
-            "https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-02.jpg",
+           img1,
           imageAlt:
-            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
+           "Trendy"
         },
       ],
       sections: [
         {
           id: "occasion",
           name: "OCCASION",
+          level:2,
           featured: [
             {
               name: "MEHENDI",
@@ -91,6 +95,7 @@ export const navigation = {
         {
           id: "category",
           name: "CATEGORY",
+          level:3,
           featured: [
             {
               name: "INDOWESTERN SETS",
@@ -166,3 +171,57 @@ categories[3][4].push("OTHER")
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 export {categories, sizes};
+
+import bg1 from '../assets/bg1.png'
+import bg2 from '../assets/bg2.png'
+// import bg3 from '../assets/bg3.png'
+import bg4 from '../assets/bg4.png'
+import bg5 from '../assets/bg5.png'
+
+const slides = [
+  {
+    image: bg1,
+    title: "Elevate Your Style",
+    subtitle: "Blend of timeless craftsmanship with contemporary style"
+  },
+  {
+    image: bg2,
+    title: "Luxury Redefined",
+    subtitle: "Experience premium fashion with impeccable detailing"
+  },
+  {
+    image: bg4,
+    title: "Exclusivity in Every Thread",
+    subtitle: "Stand out from the crowd"
+  },
+  {
+    image: bg5,
+    title: "Timeless Elegance",
+    subtitle: "Classic pieces that never go out of style"
+  }
+];
+import { Sparkles, Shield, Truck, Clock} from 'lucide-react'
+
+const features = [
+  {
+    icon: Sparkles,
+    title: "Premium Quality",
+    description: "Each piece is crafted with exceptional attention to detail using the finest materials available."
+  },
+  {
+    icon: Shield,
+    title: "Guaranteed Authenticity",
+    description: "Every item in our collection comes with a certificate of authenticity and a lifetime guarantee."
+  },
+  {
+    icon: Truck,
+    title: "Global Shipping",
+    description: "We deliver to over 180 countries with fast, reliable shipping and real-time tracking."
+  },
+  {
+    icon: Clock,
+    title: "24/7 Support",
+    description: "Our dedicated customer service team is available around the clock to assist you."
+  }
+];
+export {slides, features};

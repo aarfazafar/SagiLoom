@@ -31,6 +31,7 @@ export default function NavBar() {
 
   const [scrolled, setScrolled] = useState(false);
 
+  const [hoveredPage, setHoveredPage] = useState(null);
   //get user from localstorage
 
   const user = JSON.parse(localStorage.getItem("users"));
@@ -56,8 +57,13 @@ export default function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleCategoryClick = (category, section, item, close) =>{
+    navigate(`/productpage/${category.id}/${section.id}/${item.name.toLowerCase()}`)
+    close();
+  }
+
   return (
-    <div className="z-50 fixed top-0 w-full">
+    <div className="grotesk z-100 fixed top-0 w-full">
       {/* Mobile menu */}
       <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
         <DialogBackdrop
@@ -65,7 +71,7 @@ export default function NavBar() {
           className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear data-closed:opacity-0"
         />
 
-        <div className="fixed inset-0 z-40 flex">
+        <div className="fixed inset-0 z-100 flex">
           <DialogPanel
             transition
             className="relative flex w-full h-full max-w-xs transform flex-col overflow-y-auto bg-white pb-12 shadow-xl transition duration-300 ease-in-out data-closed:-translate-x-full"
@@ -144,12 +150,14 @@ export default function NavBar() {
                         >
                           {section.items.map((item) => (
                             <li key={item.name} className="flow-root">
-                              <Link
-                                to={item.href}
+                              <p
+                                // to={item.href}
+                                // to={`/${category.id}/${section.id}/${item.id}`}
+                                onClick={()=>handleCategoryClick(category, section, item, close)}
                                 className="-m-2 block p-2 text-gray-500"
                               >
                                 {item.name}
-                              </Link>
+                              </p>
                             </li>
                           ))}
                         </ul>
@@ -229,7 +237,7 @@ export default function NavBar() {
 
         <nav
           aria-label="Top"
-          className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+          className="z-100 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
         >
           <div className="border-b border-gray-200/75">
             <div className="flex h-16 justify-between items-center">
@@ -269,7 +277,9 @@ export default function NavBar() {
                         // onHoverEnd={() => setScrolled(false)}
                       >
                         <PopoverButton
-                        onClick={()=>setScrolled(!scrolled)}
+                          onClick={() => setScrolled(!scrolled)}
+                          onMouseEnter={() => setHoveredPage(category.name)}
+                          onMouseLeave={() => setHoveredPage(null)}
                           className={`relative z-10 -mb-px flex items-center border-b-2 border-transparent focus:border-none pt-px text-sm font-medium ${
                             scrolled
                               ? "text-gray-700 hover:text-gray-800 "
@@ -277,6 +287,17 @@ export default function NavBar() {
                           } transition-colors duration-300 ease-out data-open:border-indigo-600 data-open:text-indigo-600`}
                         >
                           {category.name}
+                          <span
+                            style={{
+                              transform:
+                                hoveredPage === category.name
+                                  ? "scaleX(1)"
+                                  : "scaleX(0)",
+                            }}
+                            className={`absolute -bottom-1 -left-2 -right-2 h-1 origin-left rounded-full ${
+                              open ? "bg-[#f5eee4]" : "bg-[#fbf7f6]"
+                            } transition-transform duration-300 ease-out`}
+                          />
                         </PopoverButton>
                       </div>
 
@@ -297,16 +318,16 @@ export default function NavBar() {
                                 {category.featured.map((item) => (
                                   <div
                                     key={item.name}
-                                    className="group relative text-base sm:text-sm"
+                                    className="group relative uppercase sm:text-sm"
                                   >
                                     <img
                                       alt={item.imageAlt}
                                       src={item.imageSrc}
-                                      className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
+                                      className="aspect-square w-full shadow=md bg-gray-100 object-cover group-hover:opacity-85 group-hover:scale-98"
                                     />
                                     <Link
                                       to={item.href}
-                                      className="mt-6 block font-medium text-gray-900"
+                                      className="mt-6 block font-medium text-xs text-gray-900"
                                     >
                                       <span
                                         aria-hidden="true"
@@ -325,7 +346,7 @@ export default function NavBar() {
                                   <div key={section.name}>
                                     <p
                                       id={`${section.name}-heading`}
-                                      className="font-medium text-gray-900"
+                                      className="text-xs font-medium text-gray-900"
                                     >
                                       SHOP BY {section.name}
                                     </p>
@@ -337,8 +358,8 @@ export default function NavBar() {
                                       {section.items.map((item) => (
                                         <li key={item.name} className="flex">
                                           <Link
-                                            to={item.href}
-                                            className="hover:text-gray-800"
+                                            to={`/productpage/${category.id}/${section.id}/${item.name.toLowerCase()}`}
+                                            className="tracking-wider hover:text-gray-800"
                                           >
                                             {item.name}
                                           </Link>
@@ -359,13 +380,26 @@ export default function NavBar() {
                     <Link
                       key={page.name}
                       to={page.href}
-                      className={`flex items-center text-sm font-medium ${
+                      className={`flex relative items-center text-sm font-medium ${
                         scrolled
                           ? "text-gray-700 hover:text-gray-800"
                           : "text-white hover:text-gray-50"
                       } transition-colors duration-300 ease-out`}
+                      onMouseEnter={() => setHoveredPage(page.name)}
+                      onMouseLeave={() => setHoveredPage(null)}
                     >
                       {page.name}
+                      <span
+                        style={{
+                          transform:
+                            hoveredPage === page.name
+                              ? "scaleX(1)"
+                              : "scaleX(0)",
+                        }}
+                        className={`absolute -bottom-1 -left-2 -right-2 h-1 origin-left rounded-full ${
+                          open ? "bg-[#f5eee4]" : "bg-[#fbf7f6]"
+                        } transition-transform duration-300 ease-out`}
+                      />
                     </Link>
                   ))}
                 </div>

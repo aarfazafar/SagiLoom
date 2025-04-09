@@ -3,13 +3,15 @@ import NavBar from "../NavBar/NavBar";
 import bg1 from "../../assets/bg1.png";
 import bg2 from "../../assets/bg2.png";
 import bg4 from "../../assets/bg4.png";
-import Carousal from "../Carousal/Carousal";
+import Carousal1 from "../Carousal/Carousal1";
 import { Layout } from "../Layout/Layout";
 import Loader from "../Loader/Loader";
 import Hero from "../HeroSection/HeroSection";
 import { useContext } from "react";
 import myContext from "../../context/myContext";
-
+import poster from "../../assets/@_sagiloom_.png";
+import HeroSection from "../HeroSection/HeroSection2";
+import Features from "../FeaturesSection/Features";
 const foodData = [
   {
     name: "Authentic Bombay Mawa Jalebi",
@@ -107,21 +109,21 @@ const foodData = [
 ];
 const Home = () => {
   const context = useContext(myContext);
-  const {getAllProducts} = context;
+  const { getAllProducts } = context;
   return (
     <Layout>
       <div className="w-screen">
-        {/* <NavBar /> */}
         <div className="w-full">
-          {/* <img src={bg4} alt="" className="w-full mt-[64px] lg:mt-0" />
-           <h1 className="text-4xl font-bold text-white absolute top-[50%] left-[50%] brightness-95">
-            Welcome
-          </h1> 
-          <img src={bg2} alt="" className="w-full brightness-95" /> */}
-
-          <Hero/>
+          <HeroSection />
+          {/* <Hero /> */}
+          <Carousal1 data={getAllProducts} />
+          <div className="w-full min-h-screen">
+            <Features />
+          </div>
         </div>
-        <Carousal data={getAllProducts} />
+        <div className="w-full">
+          <img className="w-full" src={poster} alt="" />
+        </div>
         {/* <Loader/> */}
       </div>
     </Layout>

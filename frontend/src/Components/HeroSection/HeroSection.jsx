@@ -6,7 +6,7 @@ import Right from "../../assets/Right.png";
 import bg1 from "../../assets/bg1.png";
 import bg2 from "../../assets/bg2.png";
 import bg4 from "../../assets/bg4.png";
-import bg5 from "../../assets/@_sagiloom_.png";
+import bg5 from "../../assets/bg5.png";
 const images = [bg1, bg2, bg4, bg5];
 
 export default function Hero() {
