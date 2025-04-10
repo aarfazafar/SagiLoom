@@ -13,7 +13,8 @@ export default function Product({ product }) {
     productCategories,
   } = product;
 
-  const trimDescription = (text, wordLimit = 6) => {
+  const trimDescription = (text, type) => {
+    const wordLimit = type === "title" ? 4 : 6;
     const words = text.split(" ");
     return words.length > wordLimit
       ? words.slice(0, wordLimit).join(" ") + "..."
@@ -55,16 +56,36 @@ export default function Product({ product }) {
 
         <div className="p-4 space-y-2">
           <h3 className="text-lg grotesk font-semibold text-[#3a2e23] tracking-tight">
-            {name}
+            {trimDescription(name, "title")}
           </h3>
           <p className="grotesk text-sm text-[#5a4637]">
-            {trimDescription(description)}
+            {trimDescription(description, "desc")}
           </p>
 
           <div className="flex justify-between items-center mt-3">
-            <p className="text-lg courier font-semibold text-[#a9745b]">
+            {/* <p className="text-lg courier font-semibold text-[#a9745b]">
               ₹{price}
-            </p>
+            </p> */}
+
+            <div className="flex items-center gap-4">
+              {/* Original Price (Strikethrough) */}
+              <span
+                className={`text-lg courier font-semibold text-[#a9745b] ${
+                  product.discount === 0 ? "" : "line-through"
+                }`}
+              >
+                ₹ {product.price}
+              </span>
+              {product.discount > 0 && (
+                <span className="text-lg font-semibold text-gray-800">
+                  ₹{" "}
+                  {(
+                    Number(product.price) -
+                    (Number(product.price) * Number(product.discount)) / 100
+                  ).toFixed(2)}
+                </span>
+              )}
+            </div>
             <button className="text-sm bg-[#3a2e23] text-white pt-1 pb-[6px] px-4 rounded-full hover:bg-black hover:scale-105 transition-all duration-300 shadow-sm">
               View
             </button>

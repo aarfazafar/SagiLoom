@@ -11,65 +11,7 @@ const ProductList = () => {
 
   const [entriesPerPage, setEntriesPerPage] = useState(30);
   const [currentPage, setCurrentPage] = useState(1);
-  // return (
-  //   <div className="p-4">
-  //     <h2 className="text-xl font-bold mb-4">All Products</h2>
-  //     <div className="flex justify-center relative top-20">
-  //       {loading && <Loader />}
-  //     </div>
-  //     {getAllProducts.map((product) => (
-  //       <div key={product.id} className="border p-4 mb-4 rounded shadow">
-  //         <h3 className="text-lg font-semibold">{product.name}</h3>
-  //         <p>Price: ₹{product.price}</p>
-  //         <p>
-  //           Link:{" "}
-  //           <a href={product.productLink} className="text-blue-500 underline">
-  //             {product.productLink}
-  //           </a>
-  //         </p>
-  //         <p>Description: {product.description}</p>
 
-  //         <div className="flex gap-2 mt-2">
-  //           {product.productImages?.map((img, i) => (
-  //             <img
-  //               key={i}
-  //               src={img}
-  //               alt={`Product ${i + 1}`}
-  //               className="w-24 h-24 object-cover rounded"
-  //             />
-  //           ))}
-  //         </div>
-
-  //         <div className="mt-2">
-  //           <p>Sizes: {product.sizes?.join(", ")}</p>
-  //           <p>Discount: {product.discount}%</p>
-
-  //           <p className="mt-1 font-medium">Specification:</p>
-  //           <ul className="list-disc pl-5">
-  //             {product.specification?.map((spec, idx) => (
-  //               <li key={idx}>
-  //                 {Object.keys(spec)[0]}: {Object.values(spec)[0]}
-  //               </li>
-  //             ))}
-  //           </ul>
-
-  //           <p className="mt-1 font-medium">Categories:</p>
-  //           <ul className="list-disc pl-5">
-  //             {product.productCategories?.map((cat, idx) => (
-  //               <li key={idx}>
-  //                 {Object.keys(cat)[0]}: {Object.values(cat)[0]}
-  //               </li>
-  //             ))}
-  //           </ul>
-
-  //           <p className="mt-2 text-sm text-gray-600">
-  //             Added on: {product.date}
-  //           </p>
-  //         </div>
-  //       </div>
-  //     ))}
-  //   </div>
-  // );
 
   return (
     <div className="w-full min-h-screen p-6 bg-[#1a1b23]">
@@ -134,7 +76,7 @@ const ProductList = () => {
         <table className="table-auto w-full bg-[#13141c] rounded-lg">
           <thead>
             <tr>
-              <th className="min-w-[120px] px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
+              <th className="min-w-[320px] px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
                 Images
               </th>
               <th className="min-w-[100px] px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">

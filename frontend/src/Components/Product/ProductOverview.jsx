@@ -12,6 +12,7 @@ import { Layout } from "../Layout/Layout";
 import { useParams, Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { fireDB } from "../../firebaseConfig/firebaseConfig";
+import { Loading } from "../Loader/Loading";
 const ProductOverview = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -19,7 +20,7 @@ const ProductOverview = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  
+
   const allSizes = ["XS", "S", "M", "L", "XL"];
   const care = [
     "Dry Clean Only",
@@ -72,9 +73,7 @@ const ProductOverview = () => {
   if (!product) {
     return (
       <Layout>
-        <div className="min-h-screen flex items-center justify-center text-2xl poppins">
-          <p>Loading...</p>
-        </div>
+        <Loading />
       </Layout>
     );
   }

@@ -27,6 +27,7 @@ import { fireDB } from "../../firebaseConfig/firebaseConfig";
 import { getDocs, collection } from "firebase/firestore";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { Loading } from "../Loader/Loading";
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
   { name: "Newest", href: "#", current: false },
@@ -93,31 +94,45 @@ function classNames(...classes) {
 export default function ProductPage() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const context = useContext(myContext);
-  const { loading, getAllProducts } = context;
+  const { getAllProducts } = context;
 
   const { categoryId, sectionId, itemName } = useParams();
   const [matchingProducts, setMatchingProducts] = useState([]);
 
-  useEffect(() => {
-    console.log("🧩 Params:", { categoryId, sectionId, itemName });
-  }, []);
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   console.log("🧩 Params:", { categoryId, sectionId, itemName });
+  // }, []);
   useEffect(() => {
     const fetchProducts = async () => {
-      // console.log("📦 Params:", { categoryId, sectionId, itemName });
-
+      setLoading(true);
       if (
         (!categoryId || categoryId.toLowerCase() === "") &&
         (!sectionId || sectionId.trim() === "") &&
         (!itemName || itemName.trim() === "")
       ) {
-        console.log(getAllProducts);
-        
+        // console.log(getAllProducts);
+
         setMatchingProducts(getAllProducts);
+        setLoading(false);
         return;
       }
-      
+
       if (categoryId.toLowerCase() !== "shop") {
         console.warn("⚠️ Not a 'shop' category, skipping fetch.");
+        setLoading(false);
+        return;
+      }
+
+      if (sectionId?.toLowerCase() === "arrivals") {
+        const newArrivals = getAllProducts
+          .filter((product) => product.time)
+          .sort((a, b) => new Date(b.time) - new Date(a.time))
+          .slice(0, 8);
+
+        setMatchingProducts(newArrivals);
+        setLoading(false);
         return;
       }
 
@@ -137,7 +152,7 @@ export default function ProductPage() {
                 value.toLowerCase() === itemName.toLowerCase();
 
               if (isMatch) {
-                console.log(`✅ MATCH FOUND: ${key} = ${value}`);
+                console.log(`MATCH FOUND: ${key} = ${value}`);
               }
 
               return isMatch;
@@ -149,10 +164,12 @@ export default function ProductPage() {
           }
         });
 
-        console.log("🎯 Matched Products:", products);
+        console.log("Matched Products:", products);
         setMatchingProducts(products);
       } catch (error) {
-        console.error("❌ Error fetching products:", error);
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -185,6 +202,9 @@ export default function ProductPage() {
 
   return (
     <Layout>
+      {
+        loading && <Loading/>
+      }
       <div className="absolute top-0 bg-gradient-to-r from-[#e8d8c3]/20 via-[#e8d8c3] to-[#e1cbc1] w-full h-16"></div>
       <div className="w-full relative">
         {/* Mobile filter dialog */}
@@ -305,8 +325,10 @@ export default function ProductPage() {
 
         <main className="mt-10 mx-auto px-4 sm:px-6 lg:px-20">
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-20 pb-6">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900">
-              New Arrivals
+            <h1 className="flex gap-2 playfair-display text-xl tracking-wide text-gray-600">
+              <span>{categoryId} /</span>
+              <span>{sectionId? sectionId: ""}</span>
+              <span>{itemName ? "/ " + itemName: ""}</span>
             </h1>
 
             <div className="flex items-center">

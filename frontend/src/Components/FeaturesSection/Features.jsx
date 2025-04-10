@@ -5,6 +5,9 @@ import { useInView } from "react-intersection-observer";
 // import { FaLeaf, FaAward, FaHeart, FaShieldAlt, FaStar } from "react-icons/fa";
 import {
   Leaf,
+  Gem,
+  Ruler,
+  Hourglass,
   Trophy,
   Heart,
   Shield,
@@ -21,22 +24,28 @@ const features = [
       "Each piece is crafted with exceptional attention to detail using the finest materials available.",
   },
   {
-    icon: Shield,
-    title: "Guaranteed Authenticity",
+    icon: Ruler,
+    title: "Perfect Fit & Finish",
     description:
-      "Every item in our collection comes with a certificate of authenticity and a lifetime guarantee.",
+      "Every item in our collection is designed for modern men’s and women’s who appreciate precision and style.",
   },
   {
-    icon: Truck,
-    title: "Global Shipping",
+    icon: Gem,
+    title: "Wearable Luxury",
     description:
-      "We deliver to over 180 countries with fast, reliable shipping and real-time tracking.",
+      "We deliver High-end fashion that’s not just stylish but also comfortable for everyday wear.",
   },
   {
-    icon: Clock,
-    title: "24/7 Support",
+    icon: Hourglass,
+    title: "Timeless Fashion",
     description:
-      "Our dedicated customer service team is available around the clock to assist you.",
+      "We produce pieces that never go out of style, blending heritage with contemporary trends.",
+  },
+  {
+    icon: Leaf,
+    title: "Sustainable & Ethical",
+    description:
+      "We are committed to responsible fashion, ensuring fair practices and eco-conscious production.",
   },
 ];
 
@@ -111,7 +120,7 @@ const AboutFeatures = () => {
 
   return (
     <div className=" min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="container mx-auto px-4 py-16 lg:py-24 h-auto">
+      <div className="container mx-auto px-4 py-10 lg:py-8 h-auto">
         <div className="flex flex-col lg:flex-row  gap-8 lg:gap-16 h-auto">
           {/* Video Section */}
           <div className="lg:w-1/2">
@@ -132,10 +141,10 @@ const AboutFeatures = () => {
           </div>
 
           {/* Features Section */}
-          <div className="bg-white">
-            <div className="relative lg:h-[900px] px-16 py-4 overflow-visible">
+          <div className="">
+            <div className="relative lg:h-[1200px] px-16 overflow-visible">
               <div className="sticky top-5 z-10 bg-white/80 mb-12">
-                <h2 className="text-5xl font-bold mb-6">Why Choose Us</h2>
+                <h2 className="text-5xl font-bold mb-6 bg-gray-50 p-2">Why Choose Us ?</h2>
               </div>
 
               <div className="space-y-16">
@@ -146,13 +155,16 @@ const AboutFeatures = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.6 }}
-                    className="p-8 bg-gray-50 rounded-2xl shadow-sm"
+                    className="p-8 flex items-center gap-8 bg-gray-50 rounded-2xl shadow-sm"
                   >
-                    <feature.icon className="w-12 h-12 mb-4 text-black" />
+                    <feature.icon className="w-12 h-12 mb-4 text-black/80" />
+                    <div className="flex-1">
                     <h3 className="text-2xl font-semibold mb-3">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-600">{feature.description}</p>
+                    <p className="text-gray-600 tracking-wide">{feature.description}</p>
+
+                    </div>
                   </motion.div>
                 ))}
               </div>

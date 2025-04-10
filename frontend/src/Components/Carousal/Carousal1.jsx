@@ -4,7 +4,8 @@ import Product from "../Product/Product";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../../index.css";
-
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 // Custom Arrow Components with full styling
 const PrevArrow = ({ className, style, onClick }) => (
   <button
@@ -102,8 +103,11 @@ const Carousal1 = ({ data }) => {
       <div className="w-full min-h-screen flex flex-col items-center">
         {/* Heading Section */}
         <div className="w-full flex justify-center">
-          <div className="w-full heading-font text-4xl bg-gradient-to-r from-[#e8d8c3]/20 via-[#e8d8c3]/70 to-[#e8d8c3]/20 tracking-wide text-center px-4 py-4 text-black/80">
+          <div className="relative w-full playfair-display font-semibold text-4xl bg-gradient-to-r from-[#e8d8c3]/20 via-[#e8d8c3]/70 to-[#e8d8c3]/20 tracking-wide text-center px-4 py-4 text-black/80 text-shadow-lg/20">
             New Arrivals
+            <Link to={"/productpage/shop/arrivals"}>
+              <ArrowRight className="absolute top-1/3 right-10" />
+            </Link>
           </div>
         </div>
 

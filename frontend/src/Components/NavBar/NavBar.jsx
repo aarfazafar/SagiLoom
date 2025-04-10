@@ -20,20 +20,20 @@ import {
   XMarkIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-
+import SearchBar from "../Search/Search";
 import logoWBg from "../../assets/logo1.jpg";
 import logo from "../../assets/logo2.png";
 import { navigation } from "../../constants/data";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar({ data }) {
   const [open, setOpen] = useState(false);
 
   const [scrolled, setScrolled] = useState(false);
 
   const [hoveredPage, setHoveredPage] = useState(null);
   //get user from localstorage
-
+  const [showSearch, setShowSearch] = useState(false);
   const user = JSON.parse(localStorage.getItem("users"));
 
   const navigate = useNavigate();
@@ -57,10 +57,12 @@ export default function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleCategoryClick = (category, section, item, close) =>{
-    navigate(`/productpage/${category.id}/${section.id}/${item.name.toLowerCase()}`)
+  const handleCategoryClick = (category, section, item, close) => {
+    navigate(
+      `/productpage/${category.id}/${section.id}/${item.name.toLowerCase()}`
+    );
     close();
-  }
+  };
 
   return (
     <div className="grotesk z-100 fixed top-0 w-full">
@@ -153,7 +155,14 @@ export default function NavBar() {
                               <p
                                 // to={item.href}
                                 // to={`/${category.id}/${section.id}/${item.id}`}
-                                onClick={()=>handleCategoryClick(category, section, item, close)}
+                                onClick={() =>
+                                  handleCategoryClick(
+                                    category,
+                                    section,
+                                    item,
+                                    close
+                                  )
+                                }
                                 className="-m-2 block p-2 text-gray-500"
                               >
                                 {item.name}
@@ -280,10 +289,10 @@ export default function NavBar() {
                           onClick={() => setScrolled(!scrolled)}
                           onMouseEnter={() => setHoveredPage(category.name)}
                           onMouseLeave={() => setHoveredPage(null)}
-                          className={`relative z-10 -mb-px flex items-center border-b-2 border-transparent focus:border-none pt-px text-sm font-medium ${
+                          className={`relative z-10 -mb-px flex items-center border-b-2 border-transparent focus:border-none pt-px text-sm font-medium hover:scale-103 ${
                             scrolled
-                              ? "text-gray-700 hover:text-gray-800 "
-                              : "text-white hover:text-gray-50"
+                              ? "text-gray-700 hover:text-gray-500 "
+                              : "text-white hover:text-[#fbf7f6]"
                           } transition-colors duration-300 ease-out data-open:border-indigo-600 data-open:text-indigo-600`}
                         >
                           {category.name}
@@ -358,7 +367,9 @@ export default function NavBar() {
                                       {section.items.map((item) => (
                                         <li key={item.name} className="flex">
                                           <Link
-                                            to={`/productpage/${category.id}/${section.id}/${item.name.toLowerCase()}`}
+                                            to={`/productpage/${category.id}/${
+                                              section.id
+                                            }/${item.name.toLowerCase()}`}
                                             className="tracking-wider hover:text-gray-800"
                                           >
                                             {item.name}
@@ -380,11 +391,11 @@ export default function NavBar() {
                     <Link
                       key={page.name}
                       to={page.href}
-                      className={`flex relative items-center text-sm font-medium ${
+                      className={`flex relative items-center text-sm font-medium hover:scale-103 ${
                         scrolled
-                          ? "text-gray-700 hover:text-gray-800"
-                          : "text-white hover:text-gray-50"
-                      } transition-colors duration-300 ease-out`}
+                          ? "text-gray-700 hover:text-gray-500"
+                          : "text-white hover:text-[#fbf7f6]"
+                      } transition-all duration-300 ease-out`}
                       onMouseEnter={() => setHoveredPage(page.name)}
                       onMouseLeave={() => setHoveredPage(null)}
                     >
@@ -410,46 +421,19 @@ export default function NavBar() {
                   scrolled ? "lg:text-gray-500" : "lg:text-white"
                 }`}
               >
-                {/* <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Sign in
-                  </a>
-                  <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Create account
-                  </a>
-                </div>
-
-                <div className="hidden lg:ml-8 lg:flex">
-                  <a
-                    href="#"
-                    className="flex items-center text-gray-700 hover:text-gray-800"
-                  >
-                    <img
-                      alt=""
-                      src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
-                      className="block h-auto w-5 shrink-0"
-                    />
-                    <span className="ml-3 block text-sm font-medium">CAD</span>
-                    <span className="sr-only">, change currency</span>
-                  </a>
-                </div> */}
-
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2  hover:text-gray-500">
+                  <button
+                    type="button"
+                    onClick={() => setShowSearch(true)}
+                    className="p-2  hover:text-gray-500"
+                  >
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon
                       aria-hidden="true"
                       className="size-6"
                     />
-                  </a>
+                  </button>
                 </div>
                 <div className="flex lg:ml-6">
                   <Link to={"/"} className="p-2  hover:text-gray-500">
@@ -476,6 +460,24 @@ export default function NavBar() {
           </div>
         </nav>
       </header>
+
+      {/* Search Overlay */}
+      {showSearch && (
+        <div className="fixed top-0 w-full bg-white z-50 flex items-center justify-center p-4">
+          {/* SearchBar */}
+          <SearchBar data={data} />
+
+          {/* Close Button */}
+          <div className="max-w-xl flex justify-end mb-4">
+            <button
+              className="text-gray-600 hover:text-black transition"
+              onClick={() => setShowSearch(false)}
+            >
+              <XMarkIcon className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

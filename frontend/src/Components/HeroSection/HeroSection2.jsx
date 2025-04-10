@@ -93,7 +93,7 @@ function HeroSection() {
             >
               {slides[currentSlide].subtitle}
             </motion.p>
-            <Link>
+            <Link to={'/productpage'}>
               <motion.button
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}

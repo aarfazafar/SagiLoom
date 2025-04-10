@@ -47,7 +47,7 @@ export const navigation = {
       featured: [
         {
           name: "New Arrivals",
-          href: "#",
+          href: "/productpage/shop/arrivals",
           imageSrc:
           img2,
           imageAlt:
@@ -55,7 +55,7 @@ export const navigation = {
         },
         {
           name: "Trending",
-          href: "#",
+          href: "/productpage/shop/trending",
           imageSrc:
            img1,
           imageAlt:
@@ -143,9 +143,9 @@ export const navigation = {
     },
   ],
   pages: [
-    { name: "NEW ARRIVALS", href: "/arrivals" },
+    { name: "NEW ARRIVALS", href: "/productpage/shop/arrivals" },
     // { name: "KIDS", href: "#" },
-    { name: "TRENDING NOW", href: "#" },
+    { name: "TRENDING NOW", href: "/productpage/shop/trending" },
     { name: "VISION", href: "/about" },
     // { name: "TRACK ORDERS", href: "#" },
   ],

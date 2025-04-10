@@ -6,6 +6,8 @@ import videosrc from "../../assets/videos/SM2002.mp4";
 import bg1 from "../../assets/bg1.png";
 import bg2 from "../../assets/bg2.png";
 import { Layout } from "../Layout/Layout";
+import AboutFeatures from "../FeaturesSection/Features";
+import { Link } from "react-router-dom";
 function FadeInSection({ children, delay = 0 }) {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -215,6 +217,9 @@ function About() {
         </div>
       </section>
 
+      <section>
+        <AboutFeatures/>
+      </section>
       {/* Call to Action */}
       <section className="py-20 px-4 md:px-8 bg-white">
         <FadeInSection>
@@ -226,6 +231,7 @@ function About() {
               Step into the world of SAGILoom—where fashion meets excellence,
               and every piece tells a story of sophistication.
             </p>
+            <Link  to={'/productpage'}>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -234,6 +240,7 @@ function About() {
             >
               Explore Our Collections
             </motion.button>
+            </Link>
           </div>
         </FadeInSection>
       </section>
