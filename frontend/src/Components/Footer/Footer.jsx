@@ -104,7 +104,7 @@ const Footer = () => {
             </div>
             <div className="flex gap-4 items-start">
               <Mail size={20} className="text-white/80 mt-top" />
-              <p>sagiloom@gmail.com </p>
+              <p>support@sagiloom.com</p>
             </div>
             <div className="flex gap-4 mt-10">
               {/* You can update or remove other social icons if not needed */}
