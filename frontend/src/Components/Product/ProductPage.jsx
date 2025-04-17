@@ -54,35 +54,40 @@ const filters = [
     options: [
       { value: "white", label: "White", checked: false },
       { value: "beige", label: "Beige", checked: false },
+      { value: "black", label: "Black", checked: false },
       { value: "blue", label: "Blue", checked: true },
+      { value: "cream", label: "Cream", checked: true },
       { value: "brown", label: "Brown", checked: false },
       { value: "green", label: "Green", checked: false },
+      { value: "grey", label: "Grey", checked: false },
       { value: "purple", label: "Purple", checked: false },
     ],
   },
   {
-    id: "category",
-    name: "Category",
+    id: "fabric",
+    name: "Fabric",
     options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "trending", label: "Trending", checked: true },
-      { value: "indowestern", label: "INDOWESTERN SETS", checked: false },
-      { value: "jackets", label: "JACKET AND JACKET SET", checked: false },
-      { value: "kurtas", label: "KURTA AND KURTA SETS", checked: false },
-      { value: "shortkurtas", label: "SHORT KURTA'S", checked: false },
+      { value: "cotton", label: "Cotton", checked: false },
+      { value: "cotton blend", label: "Cotton Blend", checked: false },
+      { value: "linen", label: "Linen", checked: false },
+      { value: "silk", label: "Silk", checked: false },
+      { value: "polyester", label: "Polyester", checked: false },
+      { value: "rayon", label: "Rayon", checked: false },
+      { value: "viscose", label: "Viscose", checked: false },
+      { value: "nylon", label: "Nylon", checked: false },
+      // { value: "khadi", label: "Khadi", checked: false }
     ],
   },
   {
     id: "size",
     name: "Size",
     options: [
-      { value: "2l", label: "2L", checked: false },
-      { value: "6l", label: "6L", checked: false },
-      { value: "12l", label: "12L", checked: false },
-      { value: "18l", label: "18L", checked: false },
-      { value: "20l", label: "20L", checked: false },
-      { value: "40l", label: "40L", checked: true },
+      { value: "xs", label: "XS", checked: false },
+      { value: "s", label: "S", checked: false },
+      { value: "m", label: "M", checked: false },
+      { value: "l", label: "L", checked: false },
+      { value: "xl", label: "XL", checked: false },
+      // { value: "xxl", label: "XXL", checked: false },
     ],
   },
 ];
@@ -98,29 +103,37 @@ export default function ProductPage() {
 
   const { categoryId, sectionId, itemName } = useParams();
   const [matchingProducts, setMatchingProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(matchingProducts);
+  const [activeFilters, setActiveFilters] = useState({
+    color: [],
+    category: [],
+    size: [],
+  });
 
   const [loading, setLoading] = useState(true);
 
   // useEffect(() => {
   //   console.log("🧩 Params:", { categoryId, sectionId, itemName });
   // }, []);
+  const location = useLocation();
+
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
+
       if (
         (!categoryId || categoryId.toLowerCase() === "") &&
         (!sectionId || sectionId.trim() === "") &&
         (!itemName || itemName.trim() === "")
       ) {
-        // console.log(getAllProducts);
-
+        setFilteredProducts(getAllProducts);
         setMatchingProducts(getAllProducts);
         setLoading(false);
         return;
       }
 
       if (categoryId.toLowerCase() !== "shop") {
-        console.warn("⚠️ Not a 'shop' category, skipping fetch.");
+        console.warn("Not a 'shop' category, skipping fetch.");
         setLoading(false);
         return;
       }
@@ -132,6 +145,7 @@ export default function ProductPage() {
           .slice(0, 8);
 
         setMatchingProducts(newArrivals);
+        setFilteredProducts(newArrivals);
         setLoading(false);
         return;
       }
@@ -142,20 +156,17 @@ export default function ProductPage() {
 
         snapshot.forEach((doc) => {
           const data = doc.data();
-          console.log("📄 Product:", data.name || data.title);
-          console.log("📂 Categories:", data.productCategories);
 
+          // 👇 Fix: if `itemName` is undefined, still allow section match
           const matched = data.productCategories?.some((cat) => {
             return Object.entries(cat).some(([key, value]) => {
-              const isMatch =
-                key.toLowerCase() === sectionId.toLowerCase() &&
-                value.toLowerCase() === itemName.toLowerCase();
-
-              if (isMatch) {
-                console.log(`MATCH FOUND: ${key} = ${value}`);
+              if (!itemName) {
+                return key.toLowerCase() === sectionId.toLowerCase();
               }
-
-              return isMatch;
+              return (
+                key.toLowerCase() === sectionId.toLowerCase() &&
+                value.toLowerCase() === itemName.toLowerCase()
+              );
             });
           });
 
@@ -164,19 +175,19 @@ export default function ProductPage() {
           }
         });
 
-        console.log("Matched Products:", products);
         setMatchingProducts(products);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        setLoading(false);
+        setLoading(false); // ✅ Always resolves loading
+        return;
       }
     };
 
     fetchProducts();
   }, [categoryId, sectionId, itemName, getAllProducts]);
 
-  const location = useLocation();
+  // const location = useLocation();
   const navigate = useNavigate();
   const handleFilter = (value, sectionId) => {
     const searchParams = new URLSearchParams(location.search);
@@ -198,13 +209,75 @@ export default function ProductPage() {
     }
 
     navigate({ search: `?${searchParams.toString()}` });
+
+    const newActiveFilters = {
+      ...activeFilters,
+      [sectionId]: filterValue,
+    };
+    setActiveFilters(newActiveFilters);
+
+    // Apply filters to products
+    const filtered = matchingProducts.filter((product) => {
+      // If no filters are active, show all products
+      const hasActiveFilters = Object.values(newActiveFilters).some(
+        (filters) => filters.length > 0
+      );
+      if (!hasActiveFilters) return true;
+
+      // Check if product matches all active filters
+      return Object.entries(newActiveFilters).every(
+        ([filterType, selectedValues]) => {
+          if (selectedValues.length === 0) return true;
+
+          switch (filterType) {
+            case "color":
+              // Check color in specification array
+              return (
+                selectedValues.length === 0 ||
+                product.specification?.some(
+                  (spec) =>
+                    spec.Color &&
+                    // spec.Color.toLowerCase() === selectedValues[0].toLowerCase()
+                    selectedValues.includes(spec.Color.toLowerCase())
+                )
+              );
+
+            case "fabric":
+              return (
+                selectedValues.length === 0 ||
+                product.specification?.some(
+                  (spec) =>
+                    spec.Fabric &&
+                    // spec.Fabric.toLowerCase() ===
+                    // selectedValues[0].toLowerCase()
+                    selectedValues.includes(spec.Fabric.toLowerCase())
+                )
+              );
+
+            case "size":
+              return (
+                selectedValues.length === 0 ||
+                product.sizes?.some((size) =>
+                  selectedValues.includes(size.toLowerCase())
+                )
+              );
+
+            default:
+              return true;
+          }
+        }
+      );
+    });
+
+    setFilteredProducts(filtered);
   };
 
+  useEffect(() => {
+    setFilteredProducts(matchingProducts);
+  }, [matchingProducts]);
   return (
     <Layout>
-      {
-        loading && <Loading/>
-      }
+      {loading && <Loading />}
       <div className="absolute top-0 bg-gradient-to-r from-[#e8d8c3]/20 via-[#e8d8c3] to-[#e1cbc1] w-full h-16"></div>
       <div className="w-full relative">
         {/* Mobile filter dialog */}
@@ -325,10 +398,10 @@ export default function ProductPage() {
 
         <main className="mt-10 mx-auto px-4 sm:px-6 lg:px-20">
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-20 pb-6">
-            <h1 className="flex gap-2 playfair-display text-xl tracking-wide text-gray-600">
+            <h1 className="flex gap-2 playfair-display text-xs lg:text-xl tracking-wide text-gray-600">
               <span>{categoryId} /</span>
-              <span>{sectionId? sectionId: ""}</span>
-              <span>{itemName ? "/ " + itemName: ""}</span>
+              <span>{sectionId ? sectionId : ""}</span>
+              <span>{itemName ? "/ " + itemName : ""}</span>
             </h1>
 
             <div className="flex items-center">
@@ -493,7 +566,7 @@ export default function ProductPage() {
               {/* Product grid */}
               <div className=" flex-1 lg:col-span-3">
                 {/* Your content */}
-                {matchingProducts.length === 0 ? (
+                {filteredProducts.length === 0 ? (
                   <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -512,7 +585,7 @@ export default function ProductPage() {
                   </motion.div>
                 ) : (
                   <div className="flex flex-wrap justify-center gap-4">
-                    {matchingProducts.map((product, index) => {
+                    {filteredProducts.map((product, index) => {
                       return (
                         <Product product={product} key={product.id || index} />
                       );

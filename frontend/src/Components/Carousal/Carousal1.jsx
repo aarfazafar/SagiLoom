@@ -100,7 +100,7 @@ const Carousal1 = ({ data }) => {
       className="min-h-screen flex justify-center items-center"
       // style={{ backgroundImage: `url('../../assets/menubg.png')` }}
     >
-      <div className="w-full min-h-screen flex flex-col items-center">
+      <div className="w-full min-h-screen flex flex-col items-center justify-center">
         {/* Heading Section */}
         <div className="w-full flex justify-center">
           <div className="relative w-full playfair-display font-semibold text-4xl bg-gradient-to-r from-[#e8d8c3]/20 via-[#e8d8c3]/70 to-[#e8d8c3]/20 tracking-wide text-center px-4 py-4 text-black/80 text-shadow-lg/20">
@@ -112,7 +112,7 @@ const Carousal1 = ({ data }) => {
         </div>
 
         {/* Carousel */}
-        <div className="w-full py-4 min-h-[70vh] bg-[#fbf7f6] shadow-md backdrop-blur-lg">
+        <div className="w-full py-6 min-h-[70vh] bg-[#fbf7f6] shadow-md backdrop-blur-lg">
           <div className="w-full relative px-8 md:px-15 py-2">
             <Slider {...settings}>
               {data.map((product, index) => (

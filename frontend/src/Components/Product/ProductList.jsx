@@ -1,9 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
+
 import { fireDB } from "../../firebaseConfig/firebaseConfig";
 import myContext from "../../context/myContext";
 import Loader from "../Loader/Loader";
-import { Eye, Pencil, Trash2, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import {
+  Eye,
+  Pencil,
+  Trash2,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 const ProductList = () => {
   const context = useContext(myContext);
@@ -12,6 +21,15 @@ const ProductList = () => {
   const [entriesPerPage, setEntriesPerPage] = useState(30);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const deleteProduct = async (id) => {
+    try {
+      await deleteDoc(doc(fireDB, "products", id));
+      alert("Product deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      alert("Failed to delete product.");
+    }
+  };
 
   return (
     <div className="w-full min-h-screen p-6 bg-[#1a1b23]">
@@ -54,7 +72,10 @@ const ProductList = () => {
           </button>
         </div>
 
-        <Link to={"/admin/addproduct"} className="p-2 md:px-4 md:py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors flex items-center gap-2">
+        <Link
+          to={"/admin/addproduct"}
+          className="p-2 md:px-4 md:py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors flex items-center gap-2"
+        >
           <span>Add new</span>
           <svg
             className="w-5 h-5"
@@ -220,13 +241,17 @@ const ProductList = () => {
                 </td>
                 <td className="px-6 py-4 border-b border-gray-700">
                   <div className="flex items-center gap-2">
-                    <button className="p-1.5 text-blue-400 hover:text-blue-300 rounded-lg hover:bg-blue-400/10">
+                    {/* <button className="p-1.5 text-blue-400 hover:text-blue-300 rounded-lg hover:bg-blue-400/10">
                       <Eye className="w-4 h-4" />
-                    </button>
-                    <button className="p-1.5 text-green-400 hover:text-green-300 rounded-lg hover:bg-green-400/10">
+                    </button> */}
+                    {/* <button className="p-1.5 text-green-400 hover:text-green-300 rounded-lg hover:bg-green-400/10">
                       <Pencil className="w-4 h-4" />
-                    </button>
-                    <button className="p-1.5 text-red-400 hover:text-red-300 rounded-lg hover:bg-red-400/10">
+                    </button> */}
+                    <button
+                      type="button"
+                      onClick={() => deleteProduct(product.id)}
+                      className="p-1.5 text-red-400 hover:text-red-300 rounded-lg hover:bg-red-400/10"
+                    >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>

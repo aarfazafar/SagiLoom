@@ -142,9 +142,9 @@ const AboutFeatures = () => {
 
           {/* Features Section */}
           <div className="">
-            <div className="relative lg:h-[1200px] px-16 overflow-visible">
+            <div className="relative lg:h-[1200px] px-8 md:px-16 overflow-visible">
               <div className="sticky top-5 z-10 bg-white/80 mb-12">
-                <h2 className="text-5xl font-bold mb-6 bg-gray-50 p-2">Why Choose Us ?</h2>
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gray-50 p-2">Why Choose Us ?</h2>
               </div>
 
               <div className="space-y-16">

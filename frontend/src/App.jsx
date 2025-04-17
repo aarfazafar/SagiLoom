@@ -31,6 +31,7 @@ function App() {
   return (
     <MyState className="w-screen">
       <ScrollTop />
+      <Toaster position="top-center" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/*" element={<Layout />} />
@@ -40,7 +41,10 @@ function App() {
         <Route path="/products" element={<ProductList />} />
         <Route path="/about" element={<About />} />
         {/* <Route path="/productpage" element={<ProductPage />} /> */}
-        <Route path="/productpage/:categoryId?/:sectionId?/:itemName?" element={<ProductPage />} />
+        <Route
+          path="/productpage/:categoryId?/:sectionId?/:itemName?"
+          element={<ProductPage />}
+        />
         <Route
           path="/admin/*"
           element={

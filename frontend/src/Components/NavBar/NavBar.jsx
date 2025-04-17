@@ -25,6 +25,7 @@ import logoWBg from "../../assets/logo1.jpg";
 import logo from "../../assets/logo2.png";
 import { navigation } from "../../constants/data";
 import { Link, useNavigate } from "react-router-dom";
+import UserDropdown from "./UserDropDown";
 
 export default function NavBar({ data }) {
   const [open, setOpen] = useState(false);
@@ -217,20 +218,6 @@ export default function NavBar({ data }) {
                 </>
               )}
             </div>
-            {/* 
-            <div className="border-t border-gray-200 px-4 py-6">
-              <a href="#" className="-m-2 flex items-center p-2">
-                <img
-                  alt=""
-                  src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
-                  className="block h-auto w-5 shrink-0"
-                />
-                <span className="ml-3 block text-base font-medium text-gray-900">
-                  CAD
-                </span>
-                <span className="sr-only">, change currency</span>
-              </a>
-            </div> */}
           </DialogPanel>
         </div>
       </Dialog>
@@ -426,7 +413,7 @@ export default function NavBar({ data }) {
                   <button
                     type="button"
                     onClick={() => setShowSearch(true)}
-                    className="p-2  hover:text-gray-500"
+                    className="p-2 rounded-full hover:ring-1 ring-[#fbf7f6]/70 transition"
                   >
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon
@@ -436,22 +423,23 @@ export default function NavBar({ data }) {
                   </button>
                 </div>
                 <div className="flex lg:ml-6">
-                  <Link to={"/"} className="p-2  hover:text-gray-500">
-                    <span className="sr-only">User</span>
-                    <UserIcon aria-hidden="true" className="size-6" />
-                  </Link>
+                  {/* <Link to={`${user? "/" : "/login"}`} className="p-2  hover:text-gray-500"> */}
+                  <span className="sr-only">User</span>
+                  {/* <UserIcon aria-hidden="true" className="size-6" /> */}
+                  {/* </Link> */}
+                  <UserDropdown user={user} logout={logout} />
                 </div>
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Link to="#" className="group -m-2 flex items-center p-2">
+                  <Link to="#" className="group -m-2 flex items-center p-2 rounded-full hover:ring-1 ring-[#fbf7f6]/70 transition">
                     <ShoppingBagIcon
                       aria-hidden="true"
-                      className="size-6 shrink-0 group-hover:text-gray-500"
+                      className="size-6 shrink-0"
                     />
-                    <span className="ml-2 text-sm font-medium group-hover:text-gray-800">
+                    {/* <span className="ml-2 text-sm font-medium group-hover:text-gray-800">
                       0
-                    </span>
+                    </span> */}
                     <span className="sr-only">items in cart, view bag</span>
                   </Link>
                 </div>

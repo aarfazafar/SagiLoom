@@ -13,6 +13,7 @@ import { useParams, Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { fireDB } from "../../firebaseConfig/firebaseConfig";
 import { Loading } from "../Loader/Loading";
+import sizeChart from '../../assets/size-chart.png'
 const ProductOverview = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -20,6 +21,7 @@ const ProductOverview = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const [showSizeChart, setShowSizeChart] = useState(false);
 
   const allSizes = ["XS", "S", "M", "L", "XL"];
   const care = [
@@ -224,7 +226,7 @@ const ProductOverview = () => {
                     {(
                       Number(product.price) -
                       (Number(product.price) * Number(product.discount)) / 100
-                    ).toFixed(2)}
+                    ).toFixed(0)}
                   </span>
                 )}
               </div>
@@ -237,7 +239,13 @@ const ProductOverview = () => {
               <div className="my-8">
                 <div className="flex justify-between mb-6 grotesk">
                   <h2 className="text-md font-light">Size</h2>
-                  <h2 className="text-md font-light">Size Chart </h2>
+                  {/* <h2 className="text-md font-light">Size Chart </h2> */}
+                  <button
+                    onClick={() => setShowSizeChart(true)}
+                    className="text-md font-light hover:text-black/80 transition"
+                  >
+                    Size Chart
+                  </button>
                 </div>
                 <div className="flex gap-3 flex-wrap">
                   {allSizes.map((size) => (
@@ -260,15 +268,38 @@ const ProductOverview = () => {
                   ))}
                 </div>
               </div>
+              {showSizeChart && (
+                <div
+                  className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+                  onClick={() => setShowSizeChart(false)} 
+                >
+                  <div
+                    className="relative bg-white rounded-xl shadow-xl max-w-lg w-[90%] p-4"
+                    onClick={(e) => e.stopPropagation()} 
+                  >
+                    <button
+                      onClick={() => setShowSizeChart(false)}
+                      className="absolute top-2 right-4 text-gray-500 hover:text-black"
+                    >
+                      ✕
+                    </button>
+                    <img
+                      src={sizeChart}
+                      alt="Size Chart"
+                      className="w-full rounded-lg"
+                    />
+                  </div>
+                </div>
+              )}
 
               {/* Actions */}
-              <div className="lg:flex gap-4 space-y-4 lg:space-y-0 my-10">
-                <Link className="w-1/2 lg:w-full" to={product.productLink}>
-                  <button className="w-1/2 lg:w-full bg-black text-white py-3 rounded-full hover:bg-gray-900 hover:scale-103 transition duration-500 shadow-md">
+              <div className="flex flex-col lg:flex-row gap-4 space-y-4 lg:space-y-0 my-10">
+                <Link className="w-full" to={product.productLink}>
+                  <button className="w-1/2  lg:w-full  bg-black text-white py-3 rounded-full hover:bg-gray-900 hover:scale-103 transition duration-500 shadow-md">
                     Buy
                   </button>
                 </Link>
-                <button className="w1/2 lg:w-full flex justify-center gap-2 border border-gray-300 text-gray-700 py-3 rounded-full hover:bg-gray-100 hover:scale-103 transition duration-500 shadow-md">
+                <button className="w-1/2  lg:w-full flex justify-center gap-2 border border-gray-300 text-gray-700 py-3 rounded-full hover:bg-gray-100 hover:scale-103 transition duration-500 shadow-md">
                   <span>Save</span>
                   <Bookmark />
                 </button>

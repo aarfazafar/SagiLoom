@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { X, Upload } from "lucide-react";
+import { X, Upload, Loader } from "lucide-react";
 import { categories, sizes } from "../../constants/data";
 import myContext from "../../context/myContext";
 import {
@@ -13,7 +13,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
-import Loader from "../Loader/Loader";
+// import Loader from "../Loader/Loader";
 const AddProduct = () => {
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [images, setImages] = useState([]);
@@ -55,21 +55,6 @@ const AddProduct = () => {
         : [...prev.sizes, size],
     }));
   };
-
-  // const handleImageUpload = (e) => {
-  //   const files = e.target.files;
-  //   if (files && files.length > 0 && images.length < 6) {
-  //     const newImages = Array.from(files)
-  //       .slice(0, 6 - images.length)
-  //       .map((file) => URL.createObjectURL(file));
-  //     setImages([...images, ...newImages]);
-
-  //     setProduct((prev) => ({
-  //       ...prev,
-  //       productImages: [...prev.productImages, ...newImages],
-  //     }));
-  //   }
-  // };
 
   const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
@@ -124,49 +109,6 @@ const AddProduct = () => {
       productImages: prev.productImages.filter((_, i) => i !== index),
     }));
   };
-
-  // const removeImage = async (index) => {
-  //   const imageToRemove = images[index];
-
-  //   if (!imageToRemove?.public_id) {
-  //     console.error("No public_id found for the image.");
-  //     return;
-  //   }
-
-  //   try {
-  //     await axios.post(
-  //       `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/delete_by_token`,
-  //       {
-  //         public_id: imageToRemove.public_id,
-  //       },
-  //       {
-  //         auth: {
-  //           username: API_KEY,
-  //           password: API_SECRET,
-  //         },
-  //       }
-  //     );
-
-  //     console.log("Image deleted from Cloudinary!");
-
-  //     // Remove from state
-  //     const updatedImages = images.filter((_, i) => i !== index);
-  //     const updatedProductImages = product.productImages.filter(
-  //       (_, i) => i !== index
-  //     );
-
-  //     setImages(updatedImages);
-  //     setProduct((prev) => ({
-  //       ...prev,
-  //       productImages: updatedProductImages,
-  //     }));
-
-  //     toast.success("Image removed successfully!");
-  //   } catch (error) {
-  //     console.error("Error deleting image:", error);
-  //     toast.error("Failed to delete image from Cloudinary.");
-  //   }
-  // };
 
   const handleSpecsChange = (index, value) => {
     setProduct((prev) => {
@@ -342,10 +284,11 @@ const AddProduct = () => {
               </div>
             ))}
             {images.length < 6 && (
-              <label className="w-full h-32 border-2 border-dashed border-gray-700 rounded-lg flex items-center justify-center cursor-pointer hover:border-purple-500">
+              <label className="w-full h-40 border-2 border-dashed border-gray-700 rounded-lg flex items-center justify-center cursor-pointer hover:border-purple-500">
                 <div className="text-center">
                   {loading && (
-                    <Loader className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                    // <Loader className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                    <Loader className="animate-spin text-gray-400 mx-auto" />
                   )}
                   <Upload className="h-8 w-8 text-gray-400 mx-auto" />
                   <span className="mt-2 text-sm text-gray-400 block">
@@ -419,11 +362,14 @@ const AddProduct = () => {
                     onChange={(e) => handleCategoryChange(i, e.target.value)}
                     className="w-full px-4 py-2 bg-[#13141c] rounded-lg text-white border border-gray-700 focus:outline-none focus:border-purple-500"
                   >
-                    <option disabled>{selectLabel}</option>
+                    <option value="" disabled>
+                      {selectLabel}
+                    </option>
                     {values.map((value, index) => (
                       <option
                         className="first-letter:uppercase text-sm"
                         key={index}
+                        value={value}
                       >
                         {value}
                       </option>
@@ -460,7 +406,8 @@ const AddProduct = () => {
         >
           Add Product
           {loading && (
-            <Loader className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+            // <Loader className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+            <Loader className="animate-spin text-gray-400 mx-auto" />
           )}
         </button>
       </form>

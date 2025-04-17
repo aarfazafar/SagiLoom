@@ -18,8 +18,9 @@ const menuItems = [
   { icon: Users, label: "Customers", path: "/customers" },
   { icon: ShoppingCart, label: "Orders", path: "/orders" },
   { icon: DollarSign, label: "Total Earnings", path: "/earnings" },
-  { icon: BarChart3, label: "Weekly Overview", path: "/weekly" },
-  { icon: CalendarRange, label: "Monthly Overview", path: "/monthly" },
+  { icon: PlusCircle, label: "Add Best Sellers", path: "/addbestseller" },
+  // { icon: BarChart3, label: "Weekly Overview", path: "/weekly" },
+  // { icon: CalendarRange, label: "Monthly Overview", path: "/monthly" },
   { icon: PlusCircle, label: "Add Product", path: "/addproduct" },
 ];
 

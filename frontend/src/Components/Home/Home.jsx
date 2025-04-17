@@ -29,7 +29,7 @@ const Home = () => {
             <Features />
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full brightness-85">
           <img className="w-full" src={poster} alt="" />
         </div>
         {/* <Loader/> */}

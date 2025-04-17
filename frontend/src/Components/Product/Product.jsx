@@ -25,7 +25,7 @@ export default function Product({ product }) {
     <motion.div
       whileHover={{ scale: 1.03 }}
       transition={{ duration: 0.3 }}
-      className="group relative bg-[#fdf6f0] rounded-2xl overflow-hidden shadow-[0_8px_20px_-8px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.15)] transition duration-500 ease-in-out w-70 sm:w-80 border border-[#e7dcd0]"
+      className="group relative bg-[#fdf6f0] rounded-2xl overflow-hidden shadow-[0_8px_20px_-8px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_28px_-6px_rgba(0,0,0,0.15)] transition duration-500 ease-in-out w-80 m-1 sm:m-0 sm:w-80 border border-[#e7dcd0]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -34,7 +34,7 @@ export default function Product({ product }) {
         to={`/productinfo/${product.id}`}
         rel="noopener noreferrer"
       >
-        <div className="relative h-90 sm:h-100 w-full">
+        <div className="relative h-100 w-full">
           <img
             src={productImages[0]}
             alt={name}
@@ -82,7 +82,7 @@ export default function Product({ product }) {
                   {(
                     Number(product.price) -
                     (Number(product.price) * Number(product.discount)) / 100
-                  ).toFixed(2)}
+                  ).toFixed(0)}
                 </span>
               )}
             </div>

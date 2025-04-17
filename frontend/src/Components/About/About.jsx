@@ -7,6 +7,8 @@ import bg1 from "../../assets/bg1.png";
 import bg2 from "../../assets/bg2.png";
 import { Layout } from "../Layout/Layout";
 import AboutFeatures from "../FeaturesSection/Features";
+import why from "../../assets/why.png";
+import bg from "../../assets/about-bg.png";
 import { Link } from "react-router-dom";
 function FadeInSection({ children, delay = 0 }) {
   const [ref, inView] = useInView({
@@ -44,7 +46,7 @@ const VideoHero = () => {
   };
 
   return (
-    <div className="relative flex justify-center h-screen overflow-hidden group">
+    <div className="relative h-screen overflow-hidden group">
       {/* Video */}
       <video
         onMouseEnter={() => setIsHovered(true)}
@@ -56,7 +58,7 @@ const VideoHero = () => {
         loop
         playsInline
         className={`h-full object-cover transition duration-300 ${
-          isHovered ? "brightness-50" : "brightness-100"
+          isHovered ? "brightness-60" : "brightness-100"
         }`}
       />
 
@@ -79,25 +81,34 @@ const VideoHero = () => {
 function About() {
   return (
     <Layout className="bg-white">
-      <div className="absolute top-0 bg-gradient-to-r from-[#e8d8c3]/20 via-[#e8d8c3] to-[#e1cbc1] w-full h-16"></div>
+      <div className="absolute top-0 bg-gradient-to-r from-[#e8d8c3]/20 via-[#e8d8c3] to-[#e1cbc1] w-full h-16 z-50"></div>
 
       {/* Brand Introduction */}
-      <section className="py-20 px-4 md:px-8 bg-cream">
+      <section className="relative py-25 md:py-17 px-10 flex flex-col md:flex-row items-center justify-center gap-10 bg-gradient-to-br from-[#fbf7f6] via-[#f4eae8] to-[#e9dcd8] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden rounded-3xl">
+        {/* Overlay behind content */}
+        <div className="absolute inset-0 bg-white/10 backdrop-blur-xl z-0" />
+
+        {/* Content with z-10 to sit above the overlay */}
         <FadeInSection>
-          <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-800">
-              Welcome to SAGILoom
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              More than just a fashion brand—we're a movement that redefines
-              style for both men and women. With a perfect fusion of tradition
-              and modernity, our designs celebrate individuality, confidence,
-              and sophistication.
-            </p>
+          <div className="relative z-10 w-full h-full flex items-center">
+            <div className="max-w-7xl mx-auto text-center">
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-[#362a21] drop-shadow">
+                Welcome to SAGILoom
+              </h2>
+              <p className="text-xl text-[#7b6653] max-w-3xl mx-auto leading-relaxed">
+                More than just a fashion brand—we're a movement that redefines
+                style for both men and women. With a perfect fusion of tradition
+                and modernity, our designs celebrate individuality, confidence,
+                and sophistication.
+              </p>
+            </div>
           </div>
         </FadeInSection>
+
+        <div className="relative z-10">
+          <VideoHero />
+        </div>
       </section>
-      <VideoHero />
 
       {/* Our Story */}
       <section className="py-20 px-4 md:px-8 bg-white">
@@ -217,8 +228,15 @@ function About() {
         </div>
       </section>
 
-      <section>
+      {/* <section>
         <AboutFeatures/>
+      </section> */}
+      <section>
+        <img
+          src={why}
+          className="w-full h-full object-cover brightness-95 opacity-90"
+          alt=""
+        />
       </section>
       {/* Call to Action */}
       <section className="py-20 px-4 md:px-8 bg-white">
@@ -231,15 +249,15 @@ function About() {
               Step into the world of SAGILoom—where fashion meets excellence,
               and every piece tells a story of sophistication.
             </p>
-            <Link  to={'/productpage'}>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-cream text-gray-800 px-8 py-4 rounded-full text-lg font-semibold 
+            <Link to={"/productpage"}>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-cream text-gray-800 px-8 py-4 rounded-full text-lg font-semibold 
                          shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200"
-            >
-              Explore Our Collections
-            </motion.button>
+              >
+                Explore Our Collections
+              </motion.button>
             </Link>
           </div>
         </FadeInSection>
