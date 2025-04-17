@@ -109,7 +109,7 @@ const Footer = () => {
             <div className="flex gap-4 mt-10">
               {/* You can update or remove other social icons if not needed */}
               <a
-                href="https://www.instagram.com/_sagiloom?igsh=MWxydTh0N2RqMGIzcg=="
+                href="https://www.instagram.com/__sagiloom_/"
                 aria-label="Instagram"
                 className="hover:text-white"
                 target="_blank"
