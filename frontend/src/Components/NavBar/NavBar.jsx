@@ -26,6 +26,7 @@ import logo from "../../assets/logo2.png";
 import { navigation } from "../../constants/data";
 import { Link, useNavigate } from "react-router-dom";
 import UserDropdown from "./UserDropDown";
+import toast from "react-hot-toast";
 
 export default function NavBar({ data }) {
   const [open, setOpen] = useState(false);
@@ -36,12 +37,25 @@ export default function NavBar({ data }) {
   //get user from localstorage
   const [showSearch, setShowSearch] = useState(false);
   const user = JSON.parse(localStorage.getItem("users"));
+  // console.log(user);
+  
 
   const navigate = useNavigate();
+
+  const userData = localStorage.getItem("users");
+  let role = ""
+  // console.log(userData)
+  if (userData) {
+    const parsedUser = JSON.parse(userData);
+    role = parsedUser.role;
+    // console.log(role); // Output: "admin"
+  }
+  
 
   // logout function
   const logout = () => {
     localStorage.clear("users");
+    toast.success("Logged out Successfully")
     navigate("/");
   };
 
@@ -192,11 +206,27 @@ export default function NavBar({ data }) {
             </div>
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {user ? (
-                <button className="flow-root" onClick={logout}>
-                  <div className="-m-2 block p-2 font-medium text-gray-900">
-                    Logout
-                  </div>
-                </button>
+                <>
+                  <button className="flow-root" onClick={logout}>
+                    <div className="-m-2 block p-2 font-medium text-gray-900">
+                      Logout
+                    </div>
+                  </button>
+
+                  {role === "admin" && (
+                    <Link to="/admin" className="flow-root">
+                      <div className="-m-2 block p-2 font-medium text-gray-900">
+                        Admin Panel
+                      </div>
+                    </Link>
+                  )}
+                   <Link
+                    to="/wishlist"
+                    className="-m-2 block p-2 font-medium text-gray-900"
+                  >
+                    Wishlist
+                  </Link>
+                </>
               ) : (
                 <>
                   <div className="flow-root">
@@ -427,12 +457,15 @@ export default function NavBar({ data }) {
                   <span className="sr-only">User</span>
                   {/* <UserIcon aria-hidden="true" className="size-6" /> */}
                   {/* </Link> */}
-                  <UserDropdown user={user} logout={logout} />
+                  <UserDropdown user={user} logout={logout} role={role} />
                 </div>
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Link to="#" className="group -m-2 flex items-center p-2 rounded-full hover:ring-1 ring-[#fbf7f6]/70 transition">
+                  <Link
+                    to="/wishlist"
+                    className="group -m-2 flex items-center p-2 rounded-full hover:ring-1 ring-[#fbf7f6]/70 transition"
+                  >
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="size-6 shrink-0"

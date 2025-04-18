@@ -16,6 +16,7 @@ import { Layout } from "./Layout";
 import ProductList from "./Components/Product/ProductList";
 import About from "./Components/About/About";
 import ProductPage from "./Components/Product/ProductPage";
+import Wishlist from "./Components/WishList/Wishlist";
 function App() {
   useEffect(() => {
     const lenis = new Lenis();
@@ -53,6 +54,7 @@ function App() {
             </ProtectedRouteForAdmin>
           }
         />
+        <Route path="/wishlist" element={<Wishlist/>}/>
       </Routes>
       <Toaster />
     </MyState>

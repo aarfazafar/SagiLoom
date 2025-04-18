@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { UserIcon } from "@heroicons/react/24/outline";
-const UserDropdown = ({ user, logout }) => {
+const UserDropdown = ({ user, logout, role }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
 
@@ -42,15 +42,24 @@ const UserDropdown = ({ user, logout }) => {
           >
             <div className="space-y-2 px-4 py-4">
               {user ? (
-                <button
-                  onClick={() => {
-                    logout();
-                    setIsOpen(false);
-                  }}
-                  className="w-full text-left text-sm text-gray-700 hover:text-indigo-600 transition"
-                >
-                  Logout
-                </button>
+                <>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setIsOpen(false);
+                    }}
+                    className="w-full text-left text-sm text-gray-700 hover:text-indigo-600 transition"
+                  >
+                    Logout
+                  </button>
+                  {role === "admin" && (
+                    <Link to="/admin" className="flow-root">
+                      <div className="w-full text-left text-sm text-gray-700 hover:text-indigo-600 transition">
+                        Admin Panel
+                      </div>
+                    </Link>
+                  )}
+                </>
               ) : (
                 <>
                   <Link

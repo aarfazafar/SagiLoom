@@ -10,10 +10,20 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { Layout } from "../Layout/Layout";
 import { useParams, Link } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
-import { fireDB } from "../../firebaseConfig/firebaseConfig";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  doc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
+import { fireDB, auth } from "../../firebaseConfig/firebaseConfig";
 import { Loading } from "../Loader/Loading";
-import sizeChart from '../../assets/size-chart.png'
+import sizeChart from "../../assets/size-chart.png";
+import { toast } from "react-hot-toast";
 const ProductOverview = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -30,6 +40,7 @@ const ProductOverview = () => {
     "Iron on low heat if needed",
     "Handle Sequin Work With Care",
   ];
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -79,7 +90,46 @@ const ProductOverview = () => {
       </Layout>
     );
   }
+  const saveProductToWishlist = async (productId) => {
+    try {
+      const savedUser = JSON.parse(localStorage.getItem("users"));
 
+      if (!savedUser || !savedUser.uid) {
+        // console.error("User UID not found in localStorage");
+        toast("Sign In to Wishlist Item", {
+          icon: "👤",
+        });
+        return;
+      }
+
+      const usersRef = collection(fireDB, "user");
+      const q = query(usersRef, where("uid", "==", savedUser.uid));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        console.error("No user document found with this UID.");
+        return;
+      }
+
+      const userDoc = querySnapshot.docs[0];
+      const userRef = doc(fireDB, "user", userDoc.id);
+      const userData = userDoc.data();
+
+      const currentWishlist = userData.wishlist || [];
+
+      if (currentWishlist.includes(productId)) {
+        toast.error("Product already in wishlist!");
+      } else {
+        await updateDoc(userRef, {
+          wishlist: arrayUnion(productId),
+        });
+        toast.success("Product added to wishlist!");
+      }
+    } catch (error) {
+      console.error("Error saving product to wishlist:", error);
+      toast.error("Something went wrong!");
+    }
+  };
   return (
     <Layout>
       <div className="absolute top-0 bg-gradient-to-r from-[#e8d8c3]/20 via-[#e8d8c3] to-[#e1cbc1] w-full h-16"></div>
@@ -223,10 +273,10 @@ const ProductOverview = () => {
                 {product.discount > 0 && (
                   <span className="text-lg font-semibold text-gray-800">
                     ₹{" "}
-                    {(
+                    {Math.trunc(
                       Number(product.price) -
-                      (Number(product.price) * Number(product.discount)) / 100
-                    ).toFixed(0)}
+                        (Number(product.price) * Number(product.discount)) / 100
+                    )}
                   </span>
                 )}
               </div>
@@ -271,11 +321,11 @@ const ProductOverview = () => {
               {showSizeChart && (
                 <div
                   className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-                  onClick={() => setShowSizeChart(false)} 
+                  onClick={() => setShowSizeChart(false)}
                 >
                   <div
                     className="relative bg-white rounded-xl shadow-xl max-w-lg w-[90%] p-4"
-                    onClick={(e) => e.stopPropagation()} 
+                    onClick={(e) => e.stopPropagation()}
                   >
                     <button
                       onClick={() => setShowSizeChart(false)}
@@ -299,7 +349,10 @@ const ProductOverview = () => {
                     Buy
                   </button>
                 </Link>
-                <button className="w-1/2  lg:w-full flex justify-center gap-2 border border-gray-300 text-gray-700 py-3 rounded-full hover:bg-gray-100 hover:scale-103 transition duration-500 shadow-md">
+                <button
+                  className="w-1/2  lg:w-full flex justify-center gap-2 border border-gray-300 text-gray-700 py-3 rounded-full hover:bg-gray-100 hover:scale-103 transition duration-500 shadow-md"
+                  onClick={() => saveProductToWishlist(productId)}
+                >
                   <span>Save</span>
                   <Bookmark />
                 </button>

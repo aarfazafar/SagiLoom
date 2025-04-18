@@ -79,10 +79,10 @@ export default function Product({ product }) {
               {product.discount > 0 && (
                 <span className="text-lg font-semibold text-gray-800">
                   ₹{" "}
-                  {(
+                  {Math.trunc(
                     Number(product.price) -
-                    (Number(product.price) * Number(product.discount)) / 100
-                  ).toFixed(0)}
+                      (Number(product.price) * Number(product.discount)) / 100
+                  )}
                 </span>
               )}
             </div>
