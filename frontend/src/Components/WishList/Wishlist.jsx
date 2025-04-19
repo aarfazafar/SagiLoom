@@ -13,6 +13,7 @@ import { toast } from "react-hot-toast";
 import Product from "../Product/Product";
 import { Layout } from "../Layout/Layout";
 import { Loading } from "../Loader/Loading";
+import { X } from "lucide-react";
 const Wishlist = () => {
   const [wishlistProducts, setWishlistProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -98,7 +99,17 @@ const Wishlist = () => {
         prev.filter((p) => p.id !== productIdToRemove)
       );
 
-      toast.success("Removed from wishlist!");
+      toast.success("Removed from wishlist!", {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "#713200",
+          secondary: "#FFFAEE",
+        },
+      });
     } catch (error) {
       console.error("Error removing from wishlist:", error);
       toast.error("Failed to remove from wishlist");
@@ -141,9 +152,9 @@ const Wishlist = () => {
 
                   <button
                     onClick={() => handleRemoveFromWishlist(product.id)}
-                    className="absolute top-0 right-20 bg-pink-100 hover:bg-pink-200 hover:scale-1.1 px-3 py-1 rounded text-sm shadow-md transition-all duration-200"
+                    className="absolute top-0 right-20 bg-pink-100 hover:bg-pink-200 text-gray-700 hover:scale-1.1 px-1 py-1 rounded text-xs shadow-md font-semibold transition-all duration-200"
                   >
-                    X
+                    <X></X>
                   </button>
                 </div>
               ))}

@@ -95,9 +95,17 @@ const ProductOverview = () => {
       const savedUser = JSON.parse(localStorage.getItem("users"));
 
       if (!savedUser || !savedUser.uid) {
-        // console.error("User UID not found in localStorage");
         toast("Sign In to Wishlist Item", {
           icon: "👤",
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
         });
         return;
       }
@@ -118,12 +126,33 @@ const ProductOverview = () => {
       const currentWishlist = userData.wishlist || [];
 
       if (currentWishlist.includes(productId)) {
-        toast.error("Product already in wishlist!");
+        toast("Product already in wishlist!", {
+          icon: "☑️",
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+        });
       } else {
         await updateDoc(userRef, {
           wishlist: arrayUnion(productId),
         });
-        toast.success("Product added to wishlist!");
+        toast.success("Product added to wishlist!", {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+        });
       }
     } catch (error) {
       console.error("Error saving product to wishlist:", error);

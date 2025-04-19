@@ -46,7 +46,7 @@ const VideoHero = () => {
   };
 
   return (
-    <div className="relative h-screen overflow-hidden group">
+    <div className="relative h-[90vh] overflow-hidden group">
       {/* Video */}
       <video
         onMouseEnter={() => setIsHovered(true)}
@@ -57,7 +57,7 @@ const VideoHero = () => {
         muted
         loop
         playsInline
-        className={`h-full object-cover transition duration-300 ${
+        className={`h-full object-cover object-top transition duration-300 w-full lg:w-[30vw]  ${
           isHovered ? "brightness-60" : "brightness-100"
         }`}
       />
@@ -84,18 +84,18 @@ function About() {
       <div className="absolute top-0 bg-gradient-to-r from-[#e8d8c3]/20 via-[#e8d8c3] to-[#e1cbc1] w-full h-16 z-50"></div>
 
       {/* Brand Introduction */}
-      <section className="relative py-25 md:py-17 px-10 flex flex-col md:flex-row items-center justify-center gap-10 bg-gradient-to-br from-[#fbf7f6] via-[#f4eae8] to-[#e9dcd8] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden rounded-3xl">
+      <section className="relative py-25 md:py-17 px-10 flex flex-col md:flex-row items-center justify-center gap-10 bg-gradient-to-br from-[#ffecd2] via-[#fcb69f]/10 to-[#ff9a9e]/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden rounded-3xl">
         {/* Overlay behind content */}
         <div className="absolute inset-0 bg-white/10 backdrop-blur-xl z-0" />
 
         {/* Content with z-10 to sit above the overlay */}
         <FadeInSection>
-          <div className="relative z-10 w-full h-full flex items-center">
+          <div className="relative z-10 w-full h-full flex items-center shadow-lg min-h-80 px-4 bg-gradient-to-br from-[#ffecd2] via-[#fcb69f]/10 to-[#ff9a9e]/10">
             <div className="max-w-7xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-[#362a21] drop-shadow">
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-[#362a21] drop-shadow text-shadow-lg">
                 Welcome to SAGILoom
               </h2>
-              <p className="text-xl text-[#7b6653] max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg text-[#7b6653] max-w-3xl mx-auto leading-relaxed">
                 More than just a fashion brand—we're a movement that redefines
                 style for both men and women. With a perfect fusion of tradition
                 and modernity, our designs celebrate individuality, confidence,
@@ -239,7 +239,7 @@ function About() {
         />
       </section>
       {/* Call to Action */}
-      <section className="py-20 px-4 md:px-8 bg-white">
+      <section className="py-20 px-4 md:px-8 bg-gradient-to-tl from-[#ffecd2] via-[#fcb69f]/10 to-[#ff9a9e]/10">
         <FadeInSection>
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-800">

@@ -12,6 +12,7 @@ import logo from "../../assets/logoNoBg.png";
 import { useForm, ValidationError } from "@formspree/react";
 import { toast } from "react-hot-toast";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const [state, handleSubmit] = useForm("mjkydkoz");
@@ -56,29 +57,29 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3 text-gray-300 tracking-wide text-md">
               <li>
-                <a href="/" className="hover:text-white">
+                <Link to="/products" className="hover:text-white">
                   Shop
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/about" className="hover:text-white">
+                <Link to="/about" className="hover:text-white">
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
+                <Link to="#" className="hover:text-white">
                   Help Center
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
+                <Link to="#" className="hover:text-white">
                   Features
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white">
+                <Link to="#" className="hover:text-white">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -108,24 +109,24 @@ const Footer = () => {
             </div>
             <div className="flex gap-4 mt-10">
               {/* You can update or remove other social icons if not needed */}
-              <a
-                href="https://www.instagram.com/__sagiloom_/"
+              <Link
+                to="https://www.instagram.com/__sagiloom_/"
                 aria-label="Instagram"
                 className="hover:text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Instagram size={25} />
-              </a>
-              <a href="#" aria-label="Facebook" className="hover:text-white">
+              </Link>
+              <Link to="#" aria-label="Facebook" className="hover:text-white">
                 <Facebook size={25} />
-              </a>
-              <a href="#" aria-label="Twitter" className="hover:text-white">
+              </Link>
+              <Link to="#" aria-label="Twitter" className="hover:text-white">
                 <Twitter size={25} />
-              </a>
-              <a href="#" aria-label="Youtube" className="hover:text-white">
+              </Link>
+              <Link to="#" aria-label="Youtube" className="hover:text-white">
                 <Youtube size={25} />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

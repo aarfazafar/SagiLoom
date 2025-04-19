@@ -38,24 +38,32 @@ export default function NavBar({ data }) {
   const [showSearch, setShowSearch] = useState(false);
   const user = JSON.parse(localStorage.getItem("users"));
   // console.log(user);
-  
 
   const navigate = useNavigate();
 
   const userData = localStorage.getItem("users");
-  let role = ""
+  let role = "";
   // console.log(userData)
   if (userData) {
     const parsedUser = JSON.parse(userData);
     role = parsedUser.role;
     // console.log(role); // Output: "admin"
   }
-  
 
   // logout function
   const logout = () => {
     localStorage.clear("users");
-    toast.success("Logged out Successfully")
+    toast.success("Logged out Successfully", {
+      style: {
+        border: "1px solid #713200",
+        padding: "16px",
+        color: "#713200",
+      },
+      iconTheme: {
+        primary: "#713200",
+        secondary: "#FFFAEE",
+      },
+    });
     navigate("/");
   };
 
@@ -220,7 +228,7 @@ export default function NavBar({ data }) {
                       </div>
                     </Link>
                   )}
-                   <Link
+                  <Link
                     to="/wishlist"
                     className="-m-2 block p-2 font-medium text-gray-900"
                   >
