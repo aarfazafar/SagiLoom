@@ -152,7 +152,7 @@ const Wishlist = () => {
 
                   <button
                     onClick={() => handleRemoveFromWishlist(product.id)}
-                    className="absolute top-0 right-20 bg-pink-100 hover:bg-pink-200 text-gray-700 hover:scale-1.1 px-1 py-1 rounded text-xs shadow-md font-semibold transition-all duration-200"
+                    className="absolute top-0 right-6 md:right-20 bg-pink-100 hover:bg-pink-200 text-gray-700 hover:scale-1.1 px-1 py-1 rounded text-xs shadow-md font-semibold transition-all duration-200"
                   >
                     <X></X>
                   </button>
