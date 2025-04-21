@@ -17,6 +17,7 @@ import ProductList from "./Components/Product/ProductList";
 import About from "./Components/About/About";
 import ProductPage from "./Components/Product/ProductPage";
 import Wishlist from "./Components/WishList/Wishlist";
+import WhatsAppFloatButton from "./Components/WhatsAppSupport/WhatsAppFloatButton";
 function App() {
   useEffect(() => {
     const lenis = new Lenis();
@@ -33,6 +34,7 @@ function App() {
     <MyState className="w-screen">
       <ScrollTop />
       <Toaster position="top-center" />
+      <WhatsAppFloatButton/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/*" element={<Layout />} />

@@ -57,7 +57,7 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3 text-gray-300 tracking-wide text-md">
               <li>
-                <Link to="/products" className="hover:text-white">
+                <Link to="/productpage" className="hover:text-white">
                   Shop
                 </Link>
               </li>
@@ -67,19 +67,24 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="#" className="hover:text-white">
-                  Help Center
-                </Link>
+                <a
+                  href="https://wa.me/919942237797"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Contact
+                </a>
               </li>
-              <li>
+
+              {/* <li>
                 <Link to="#" className="hover:text-white">
                   Features
                 </Link>
-              </li>
+              </li> */}
               <li>
-                <Link to="#" className="hover:text-white">
-                  Contact
-                </Link>
+                <a href="mailto:support@sagiloom.com?subject=Support%20Request&body=Hi%20Team%2C%0A%0AI%20need%20help%20with..." target="_blank">
+                  Help Center
+                </a>
               </li>
             </ul>
           </div>
