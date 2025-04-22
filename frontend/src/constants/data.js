@@ -183,6 +183,7 @@ sections.forEach((section, index) => {
 });
 categories[3][4].push("CLASSIC")
 categories[3][4].push("OTHER")
+categories[2][3].push("OTHER")
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 export {categories, sizes};
