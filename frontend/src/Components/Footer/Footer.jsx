@@ -43,8 +43,14 @@ const Footer = () => {
           </p>
           <div className="text-gray-400">
             <div className="flex justify-between mb-2">
-              <span className="font-semibold">MON - SAT</span>
+              <span className="font-semibold">MON - FRI</span>
               <span>10:00 AM - 6:00 PM</span>
+            </div>
+          </div>
+          <div className="text-gray-400 min-w-65">
+            <div className="flex justify-between mb-2 text-sm">
+              <span className="font-semibold">SAT, SUN & PUBLIC HOLIDAYS</span>
+              <span>CLOSED </span>
             </div>
           </div>
         </div>
@@ -82,7 +88,10 @@ const Footer = () => {
                 </Link>
               </li> */}
               <li>
-                <a href="mailto:support@sagiloom.com?subject=Support%20Request&body=Hi%20Team%2C%0A%0AI%20need%20help%20with..." target="_blank">
+                <a
+                  href="mailto:support@sagiloom.com?subject=Support%20Request&body=Hi%20Team%2C%0A%0AI%20need%20help%20with..."
+                  target="_blank"
+                >
                   Help Center
                 </a>
               </li>
@@ -104,14 +113,18 @@ const Footer = () => {
                 822114
               </p>
             </div>
-            <div className="flex gap-4 items-start">
-              <Phone size={20} className="text-white/80 mt-top" />
+            <a href="tel:+919942237797" className="flex gap-4 items-start">
+              <Phone size={20} className="text-white/80 mt-1" />
               <p>99422 37797</p>
-            </div>
-            <div className="flex gap-4 items-start">
-              <Mail size={20} className="text-white/80 mt-top" />
+            </a>
+            <a
+              className="flex gap-4 items-start"
+              href="mailto:support@sagiloom.com?subject=Support%20Request&body=Hi%20Team%2C%0A%0AI%20need%20help%20with..."
+              target="_blank"
+            >
+              <Mail size={20} className="text-white/80 mt-1" />
               <p>support@sagiloom.com</p>
-            </div>
+            </a>
             <div className="flex gap-4 mt-10">
               {/* You can update or remove other social icons if not needed */}
               <Link
