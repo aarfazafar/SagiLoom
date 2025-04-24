@@ -10,6 +10,7 @@ import {
   PlusCircle,
   LogOut,
   Menu,
+  Sparkle
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 const menuItems = [
@@ -18,6 +19,7 @@ const menuItems = [
   { icon: Users, label: "Customers", path: "/customers" },
   { icon: ShoppingCart, label: "Orders", path: "/orders" },
   { icon: DollarSign, label: "Total Earnings", path: "/earnings" },
+  { icon: Sparkle, label: "Best Sellers", path: "/bestSellers" },
   { icon: PlusCircle, label: "Add Best Sellers", path: "/addbestseller" },
   // { icon: BarChart3, label: "Weekly Overview", path: "/weekly" },
   // { icon: CalendarRange, label: "Monthly Overview", path: "/monthly" },

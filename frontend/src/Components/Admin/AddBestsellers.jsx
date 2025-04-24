@@ -140,7 +140,7 @@ const AddBestseller = () => {
         {/* Poster Upload */}
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-2">
-            Upload Bestseller Poster
+            Upload Bestseller Poster ( 2732 x 1536 )
           </label>
           {poster ? (
             <div className="relative w-50 h-auto mt-4">
