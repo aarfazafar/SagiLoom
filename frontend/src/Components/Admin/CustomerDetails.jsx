@@ -24,9 +24,11 @@ const CustomerDetails = () => {
   }, []);
 
   const formatFirestoreTimestamp = (timestamp) => {
-    if (!timestamp?.seconds) return "Invalid date";
-    const date = new Date(timestamp.seconds * 1000);
-    return format(date, "dd MMMM yyyy 'at' hh:mm:ss a");
+    const formattedTime = timestamp?.toDate().toLocaleString("en-IN", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+    return formattedTime;
   };
 
   return (

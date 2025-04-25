@@ -4,7 +4,6 @@ import { deleteDoc, doc } from "firebase/firestore";
 
 import { fireDB } from "../../firebaseConfig/firebaseConfig";
 import myContext from "../../context/myContext";
-import Loader from "../Loader/Loader";
 import {
   Eye,
   Pencil,
@@ -15,7 +14,6 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import { Timestamp } from "firebase/firestore";
 
 const ProductList = () => {
   const context = useContext(myContext);
@@ -127,9 +125,6 @@ const ProductList = () => {
               <th className="min-w-[320px] px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
                 Categories
               </th>
-              {/* <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
-                Added Date
-              </th> */}
               <th className="min-w-[220px] px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
                 Added Date/Time
               </th>
