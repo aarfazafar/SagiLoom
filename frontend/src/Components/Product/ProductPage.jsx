@@ -29,8 +29,8 @@ import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { Loading } from "../Loader/Loading";
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Newest", href: "#", current: false },
+  // { name: "Most Popular", href: "#", current: true },
+  // { name: "Newest", href: "#", current: false },
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
 ];
@@ -142,7 +142,7 @@ export default function ProductPage() {
         const newArrivals = getAllProducts
           .filter((product) => product.time)
           .sort((a, b) => new Date(b.time) - new Date(a.time))
-          .slice(0, 8);
+          .slice(0, 20);
 
         setMatchingProducts(newArrivals);
         setFilteredProducts(newArrivals);
@@ -275,6 +275,29 @@ export default function ProductPage() {
   useEffect(() => {
     setFilteredProducts(matchingProducts);
   }, [matchingProducts]);
+
+  const sortProductsLowToHigh = (products) => {
+    return [...products].sort((a, b) => a.price - b.price);
+  };
+
+  const sortProductsHighToLow = (products) => {
+    return [...products].sort((a, b) => b.price - a.price);
+  };
+
+  const handleSort = (name) => {
+    console.log("Sort clicked");
+    
+    if (name === "Price: Low to High") {
+      const sortedL = sortProductsLowToHigh(filteredProducts);
+      setFilteredProducts(sortedL);
+    } else {
+      const sortedH = sortProductsHighToLow(filteredProducts);
+      setFilteredProducts(sortedH);
+    }
+  };
+
+  // const handleSortHighToLow = () => {};
+
   return (
     <Layout>
       {loading && <Loading />}
@@ -423,8 +446,9 @@ export default function ProductPage() {
                   <div className="py-1">
                     {sortOptions.map((option) => (
                       <MenuItem key={option.name}>
-                        <a
-                          href={option.href}
+                        <button
+                          // href={option.href}
+                          onClick={() => handleSort(option.name)}
                           className={classNames(
                             option.current
                               ? "font-medium text-gray-900"
@@ -433,7 +457,7 @@ export default function ProductPage() {
                           )}
                         >
                           {option.name}
-                        </a>
+                        </button>
                       </MenuItem>
                     ))}
                   </div>

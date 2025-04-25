@@ -14,6 +14,9 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+
+import { Timestamp } from "firebase/firestore";
+
 const ProductList = () => {
   const context = useContext(myContext);
   const { loading, getAllProducts } = context;
@@ -124,11 +127,11 @@ const ProductList = () => {
               <th className="min-w-[320px] px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
                 Categories
               </th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
+              {/* <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
                 Added Date
-              </th>
-              <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
-                Added Time
+              </th> */}
+              <th className="min-w-[220px] px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
+                Added Date/Time
               </th>
               <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300 border-b border-gray-700">
                 Actions
@@ -136,128 +139,138 @@ const ProductList = () => {
             </tr>
           </thead>
           <tbody>
-            {getAllProducts.map((product) => (
-              <tr
-                key={product.id}
-                className="hover:bg-[#1f2029] transition-colors"
-              >
-                <td className="min-w-[120px] px-6 py-4 border-b border-gray-700">
-                  <div className="flex gap-2">
-                    {product.productImages.map((image, index) => (
-                      <img
-                        key={index}
-                        src={image}
-                        alt={`${product.name} ${index + 1}`}
-                        className="w-12 h-12 object-cover rounded"
-                      />
-                    ))}
-                  </div>
-                </td>
-                <td className="min-w-[100px] px-6 py-4 text-gray-300 border-b border-gray-700">
-                  {product.id}
-                </td>
-                <td className="min-w-[180px] px-6 py-4 text-gray-300 border-b border-gray-700">
-                  <div>
-                    <span className="font-medium text-white">
-                      {product.name}
-                    </span>
-                    <a
-                      href={product.productLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:text-blue-300 flex items-center gap-1 mt-1"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      <span className="text-sm">View</span>
-                    </a>
-                  </div>
-                </td>
-                <td className="min-w-[260px] px-6 py-4 text-gray-300 border-b border-gray-700">
-                  {product.description}
-                </td>
-                <td className="min-w-[100px] px-6 py-4 text-gray-300 border-b border-gray-700">
-                  <span className="font-semibold text-purple-500">
-                    ₹{product.price}
-                  </span>
-                </td>
-                <td className="min-w-[100px] px-6 py-4 text-gray-300 border-b border-gray-700">
-                  {product.discount > 0 ? (
-                    <span className="text-green-500">
-                      {product.discount}% off
-                    </span>
-                  ) : (
-                    <span className="text-gray-500">No discount</span>
-                  )}
-                </td>
-                <td className="min-w-[120px] px-6 py-4 border-b border-gray-700">
-                  <div className="flex flex-wrap gap-1">
-                    {product.sizes.map((size) => (
-                      <span
-                        key={size}
-                        className="px-2 py-1 text-xs bg-gray-700 text-white rounded"
-                      >
-                        {size}
+            {getAllProducts.map((product) => {
+              const formattedTime = product.time
+                ?.toDate()
+                .toLocaleString("en-IN", {
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                });
+              return (
+                <tr
+                  key={product.id}
+                  className="hover:bg-[#1f2029] transition-colors"
+                >
+                  <td className="min-w-[120px] px-6 py-4 border-b border-gray-700">
+                    <div className="flex gap-2">
+                      {product.productImages.map((image, index) => (
+                        <img
+                          key={index}
+                          src={image}
+                          alt={`${product.name} ${index + 1}`}
+                          className="w-12 h-12 object-cover rounded"
+                        />
+                      ))}
+                    </div>
+                  </td>
+                  <td className="min-w-[100px] px-6 py-4 text-gray-300 border-b border-gray-700">
+                    {product.id}
+                  </td>
+                  <td className="min-w-[180px] px-6 py-4 text-gray-300 border-b border-gray-700">
+                    <div>
+                      <span className="font-medium text-white">
+                        {product.name}
                       </span>
-                    ))}
-                  </div>
-                </td>
-                <td className="	min-w-[220px] px-6 py-4 text-gray-300 border-b border-gray-700">
-                  <div className="space-y-1">
-                    {product.specification.map((spec, index) => {
-                      const [key, value] = Object.entries(spec)[0];
-                      return (
-                        <div
-                          key={index}
-                          className="flex items-center gap-2 text-sm"
+                      <a
+                        href={product.productLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 hover:text-blue-300 flex items-center gap-1 mt-1"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span className="text-sm">View</span>
+                      </a>
+                    </div>
+                  </td>
+                  <td className="min-w-[260px] px-6 py-4 text-gray-300 border-b border-gray-700">
+                    {product.description}
+                  </td>
+                  <td className="min-w-[100px] px-6 py-4 text-gray-300 border-b border-gray-700">
+                    <span className="font-semibold text-purple-500">
+                      ₹{product.price}
+                    </span>
+                  </td>
+                  <td className="min-w-[100px] px-6 py-4 text-gray-300 border-b border-gray-700">
+                    {product.discount > 0 ? (
+                      <span className="text-green-500">
+                        {product.discount}% off
+                      </span>
+                    ) : (
+                      <span className="text-gray-500">No discount</span>
+                    )}
+                  </td>
+                  <td className="min-w-[120px] px-6 py-4 border-b border-gray-700">
+                    <div className="flex flex-wrap gap-1">
+                      {product.sizes.map((size) => (
+                        <span
+                          key={size}
+                          className="px-2 py-1 text-xs bg-gray-700 text-white rounded"
                         >
-                          <span className="text-gray-500">{key}:</span>
-                          <span className="text-white">{value}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </td>
-                <td className="min-w-[320px] px-6 py-4 text-gray-300 border-b border-gray-700">
-                  <div className="space-y-1">
-                    {product.productCategories.map((category, index) => {
-                      const [key, value] = Object.entries(category)[0];
-                      return (
-                        <div
-                          key={index}
-                          className="flex items-center gap-2 text-sm"
-                        >
-                          <span className="text-gray-500">{key}:</span>
-                          <span className="text-white">{value}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-gray-300 border-b border-gray-700">
-                  {/* {product.date} */}date
-                </td>
-                <td className="px-6 py-4 text-gray-300 border-b border-gray-700">
-                  {/* {product.time} */}time
-                </td>
-                <td className="px-6 py-4 border-b border-gray-700">
-                  <div className="flex items-center gap-2">
-                    {/* <button className="p-1.5 text-blue-400 hover:text-blue-300 rounded-lg hover:bg-blue-400/10">
+                          {size}
+                        </span>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="	min-w-[220px] px-6 py-4 text-gray-300 border-b border-gray-700">
+                    <div className="space-y-1">
+                      {product.specification.map((spec, index) => {
+                        const [key, value] = Object.entries(spec)[0];
+                        return (
+                          <div
+                            key={index}
+                            className="flex items-center gap-2 text-sm"
+                          >
+                            <span className="text-gray-500">{key}:</span>
+                            <span className="text-white">{value}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </td>
+                  <td className="min-w-[320px] px-6 py-4 text-gray-300 border-b border-gray-700">
+                    <div className="space-y-1">
+                      {product.productCategories.map((category, index) => {
+                        const [key, value] = Object.entries(category)[0];
+
+                        return (
+                          <div
+                            key={index}
+                            className="flex items-center gap-2 text-sm"
+                          >
+                            <span className="text-gray-500">{key}:</span>
+                            <span className="text-white">{value}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </td>
+                  {/* <td className="px-6 py-4 text-gray-300 border-b border-gray-700">
+                    {product.date}
+                  </td> */}
+                  <td className="px-6 py-4 text-gray-300 border-b border-gray-700">
+                    {formattedTime}
+                    {/* time */}
+                  </td>
+                  <td className="px-6 py-4 border-b border-gray-700">
+                    <div className="flex items-center gap-2">
+                      {/* <button className="p-1.5 text-blue-400 hover:text-blue-300 rounded-lg hover:bg-blue-400/10">
                       <Eye className="w-4 h-4" />
                     </button> */}
-                    {/* <button className="p-1.5 text-green-400 hover:text-green-300 rounded-lg hover:bg-green-400/10">
+                      {/* <button className="p-1.5 text-green-400 hover:text-green-300 rounded-lg hover:bg-green-400/10">
                       <Pencil className="w-4 h-4" />
                     </button> */}
-                    <button
-                      type="button"
-                      onClick={() => deleteProduct(product.id)}
-                      className="p-1.5 text-red-400 hover:text-red-300 rounded-lg hover:bg-red-400/10"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                      <button
+                        type="button"
+                        onClick={() => deleteProduct(product.id)}
+                        className="p-1.5 text-red-400 hover:text-red-300 rounded-lg hover:bg-red-400/10"
+                      >
+                        <Trash2 className="w-6 h-6" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
