@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { fireDB } from "../../firebaseConfig/firebaseConfig";
-import { format } from "date-fns";
 
 const CustomerDetails = () => {
   const [users, setUsers] = useState([]);
