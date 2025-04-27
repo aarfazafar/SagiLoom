@@ -50,7 +50,7 @@ const ProductList = () => {
           <span className="text-gray-400">entries</span>
         </div>
 
-        <div className="relative flex-1">
+        {/* <div className="relative flex-1">
           <input
             type="text"
             placeholder="Search here..."
@@ -71,7 +71,7 @@ const ProductList = () => {
               />
             </svg>
           </button>
-        </div>
+        </div> */}
 
         <Link
           to={"/admin/addproduct"}

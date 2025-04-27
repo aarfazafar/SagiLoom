@@ -15,7 +15,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
-  const [state, handleSubmit] = useForm("mjkydkoz");
+  const [state, handleSubmit] = useForm("mldbdwwe");
   const formRef = useRef(null);
 
   const customSubmit = async (e) => {
