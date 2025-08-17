@@ -64,6 +64,9 @@ const AddProduct = () => {
   // console.log("Cloud Name:", CLOUD_NAME);
   // console.log("Upload Preset:", UPLOAD_PRESET);
 
+  // console.log(JSON.stringify(categories))
+  // console.log(JSON.stringify(sizes))
+
   const handleImageUpload = async (e) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;

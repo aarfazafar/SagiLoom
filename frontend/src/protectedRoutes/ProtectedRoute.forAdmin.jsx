@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Navigate } from "react-router"
 
 export const ProtectedRouteForAdmin = ({children}) => {

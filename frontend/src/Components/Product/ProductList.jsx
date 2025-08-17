@@ -11,9 +11,10 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
+  Edit,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import EditProductModal from "../Admin/EditProductModal";
 
 const ProductList = () => {
   const context = useContext(myContext);
@@ -21,6 +22,16 @@ const ProductList = () => {
 
   const [entriesPerPage, setEntriesPerPage] = useState(30);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProductId, setSelectedProductId] = useState(null);
+
+  const handleEditClick = (product) => {
+    setSelectedProduct(product);
+    setSelectedProductId(product.id);
+    setIsEditModalOpen(true);
+  };
 
   const deleteProduct = async (id) => {
     try {
@@ -256,6 +267,13 @@ const ProductList = () => {
                     </button> */}
                       <button
                         type="button"
+                        onClick={() => handleEditClick(product)}
+                        className="p-1.5 text-green-400 hover:text-green-300 rounded-lg hover:bg-green-400/10"
+                      >
+                        <Edit className="w-6 h-6" />
+                      </button>
+                      <button
+                        type="button"
                         onClick={() => deleteProduct(product.id)}
                         className="p-1.5 text-red-400 hover:text-red-300 rounded-lg hover:bg-red-400/10"
                       >
@@ -294,6 +312,16 @@ const ProductList = () => {
           </button>
         </div>
       </div>
+
+      {/* 🔹 Edit Modal */}
+      {isEditModalOpen && selectedProduct && (
+        <EditProductModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          productData={selectedProduct}
+          productId={selectedProductId}
+        />
+      )}
     </div>
   );
 };
