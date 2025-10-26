@@ -8,7 +8,7 @@ export const Layout = ({ children }) => {
 
         <SideBar />
       </div>
-      <div className="w-full md:flex-1 md:ml-64">{children}</div>
+      <div className="w-full md:flex-1 md:ml-64 bg-[#1a1b23]">{children}</div>
     </div>
   );
 };

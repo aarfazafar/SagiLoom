@@ -3,11 +3,8 @@ import { X, Upload, Loader } from "lucide-react";
 import { categories, sizes } from "../../constants/data";
 import myContext from "../../context/myContext";
 import {
-  auth,
   fireDB,
-  imageStorage,
 } from "../../firebaseConfig/firebaseConfig";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";

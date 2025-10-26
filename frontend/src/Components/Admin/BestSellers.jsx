@@ -1,5 +1,3 @@
-// src/pages/BestsellerList.jsx
-
 import React, { useEffect, useState } from "react";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { fireDB } from "../../firebaseConfig/firebaseConfig";

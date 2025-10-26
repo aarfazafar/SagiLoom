@@ -1,8 +1,8 @@
 import React from "react";
 import NavBar from "../NavBar/NavBar";
-import bg1 from "../../assets/bg1.png";
-import bg2 from "../../assets/bg2.png";
-import bg4 from "../../assets/bg4.png";
+// import bg1 from "../../assets/bg1.png";
+// import bg2 from "../../assets/bg2.png";
+// import bg4 from "../../assets/bg4.png";
 import Carousal1 from "../Carousal/Carousal1";
 import { Layout } from "../Layout/Layout";
 import Loader from "../Loader/Loader";

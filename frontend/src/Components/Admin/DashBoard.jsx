@@ -7,6 +7,7 @@ import ProductList from "../Product/ProductList";
 import AddBestseller from "./AddBestsellers";
 import Bestsellers from "./BestSellers";
 import CustomerDetails from "./CustomerDetails";
+import HeroImages from "./HeroImages";
 
 export const DashBoard = () => {
   return (
@@ -18,6 +19,7 @@ export const DashBoard = () => {
           <Route path="/addbestseller" element= {<AddBestseller/>}/>
           <Route path="/bestsellers" element= {<Bestsellers/>}/>
           <Route path= "/customers" element= {<CustomerDetails/>}/>
+          <Route path= "/heroimages" element= {<HeroImages/>}/>
         </Routes>
       </div>
     </Layout>
