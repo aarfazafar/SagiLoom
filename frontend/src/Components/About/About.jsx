@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Play, Pause, Heading, Shield, Clock, Leaf, Heart } from "lucide-react";
-import videosrc from "../../assets/videos/SM2002.mp4";
+import videosrc from "../../assets/videos/about-video.mp4";
 import bg1 from "../../assets/bg1.png";
 import bg2 from "../../assets/bg2.png";
 import { Layout } from "../Layout/Layout";

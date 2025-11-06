@@ -1,4 +1,5 @@
-import video from "../../assets/videos/SM2002.mp4";
+import video from "../../assets/videos/about-video.mp4";
+
 import { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
